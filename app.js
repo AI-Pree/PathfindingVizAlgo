@@ -6,7 +6,6 @@ const port = 5000;
 /* using middleware to serve static files */
 app.use('/public', express.static(__dirname + '/public'));
 
-app.use('/', express.static(__dirname + '/views'))
 /* setting the default index route */
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
