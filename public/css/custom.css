@@ -13,3 +13,11 @@
     font-size:smaller;
 }
 
+/*fixing drop-down menu*/
+.dropdown-menu{
+    margin: 1.125em 0 0;
+}
+
+.dropdown-item{
+    font-size:smaller;
+}
