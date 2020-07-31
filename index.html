@@ -3,13 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>Pathding Algorithm Visualization</title>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link id="custom_css" rel="stylesheet" href="public/css/custom.css"/>
+    <link id="color_palette" rel="stylesheet" href="public/css/color-palette.css"/>
 </head>
 <body>
-
-    <div class="container">
-        <p>Hello</p>
+    <nav class="navbar navbar-expand-sm bg-PrussianBlue navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a class='btn dropdown-toggle' href="#" data-toggle="dropdown">
+                        Path Finding
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">
+                            Dijkstra's algorithm
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            A* algorithm
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            D* algorithm
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Random Walk
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Single Source Shrotest Path    
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Minimum Spanning Tree
+                        </a> 
+                        <a class="dropdown-item" href="#">
+                            All-Pairs Shortest Paths
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a class='btn dropdown-toggle' href="#" data-toggle="dropdown">
+                        Graph Search
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">
+                            Breadth First Search
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Depth First Search
+                        </a>
+                    </div>
+                </div>                
+            </li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a class='btn dropdown-toggle' href="#" data-toggle="dropdown">
+                        Patterns
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">
+                            Maze-pattern
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Soemthing
+                        </a>
+                    </div>
+                </div>      
+            </li>
+            <li class="nav-item">
+                <a class='btn' href="#">
+                    Add 
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class='btn' href="#">
+                    Draw 
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="btn" href="#">
+                    Run
+                </a>
+            </li>
+            <li class="nav-item">    
+                <a class="btn" href="#">
+                    Stop
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="btn" href="#">
+                    Clear
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container .container-fluid">
+        
     </div>
 
 </body>

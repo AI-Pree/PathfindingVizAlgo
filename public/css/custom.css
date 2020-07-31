@@ -1,0 +1,15 @@
+/* fixing buttons */
+
+.btn.focus, .btn:focus{
+    box-shadow: none;
+}
+
+.btn:hover{
+    color:#577590;
+}
+.btn {
+    font-weight:600;
+    color:#fff;
+    font-size:smaller;
+}
+
