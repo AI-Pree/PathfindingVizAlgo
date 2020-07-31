@@ -1,0 +1,11 @@
+{
+  "name": "vis_app",
+  "version": "1.0.0",
+  "description": "Pathfinding Algorithm Visualization",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pree",
+  "license": "ISC"
+}
