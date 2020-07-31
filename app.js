@@ -1,16 +1,17 @@
 const express = require('express')
 const app = express();
-
+const path = require('path')
 const port = 5000;
 
 /* using middleware to serve static files */
-app.use('/public', express.static(__dirname + 'public')));
+app.use('/public', express.static(__dirname + '/public'));
 
-
-app.get('/', (req, res) => {
-	res.sendFile(__dirname + 'index.html'));
+app.use('/', express.static(__dirname + '/views'))
+/* setting the default index route */
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.listen(port, () =>{
-	console.log("server is starting");
+	console.log("server is starting at http://localhost:" + port);
 });
