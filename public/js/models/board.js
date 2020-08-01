@@ -73,7 +73,7 @@ export default class Board{
                 node_status = "unvisited";
                 new_node = new Node(node_id, node_status); //creating node for each cell in the grid
                 this.#nodes[node_id]=new_node; // adding all the nodes to a dict for easier use of accessing the value
-                curr_html_row += '<td id=col_'+ '"' + node_id + '"' + " class= " + '"' + node_status +'"' + '></td>';
+                curr_html_row += '<td id='+ '"' + node_id + '"' + " class= " + '"' + node_status +'"' + '></td>';
                 curr_row.push(new_node);
             };
             this.#grid.push(curr_row);
