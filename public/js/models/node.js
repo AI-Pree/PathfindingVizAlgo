@@ -15,4 +15,24 @@ export default class Node{
         this.status = status; // status is to determine what kind of node it is i.e empty, occupied, weighted (node that has higher cost than normal node) and checkpoint
         this.weight = 0; 
     }
+
+    // getter for the id attribute
+    get id(){
+        return this.id;
+    }
+
+    // setter for the id attribute
+    set id(new_id){
+        this.id = new_id;
+    }
+    
+    // getter for the status attribute
+    get status(){
+        return this.status;
+    }
+
+    //setter for the status attribute
+    set status(new_status){
+        this.status = new_status;
+    }
 }
