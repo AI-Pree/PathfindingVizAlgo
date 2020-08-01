@@ -12,8 +12,8 @@ export default class Board{
         this.width = width;
         this.nodes = {}; // stores the nodes with its node id  as a key value pair where node is the value and node_id is the pair in a dict
         this.grid = [];
-        this.start = '';
-        this.destination = '';
+        this.start = ''; // holds the cell address of the start node in the table
+        this.destination = ''; // holds the cell address of the destination node in the table
     }
 
     /**
