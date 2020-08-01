@@ -6,7 +6,7 @@
  *  cell address in the table
  * 
  */
-var draw = (node_id) => {
+export function draw(node_id){
 
     //create a new event for the draw
 
@@ -14,7 +14,7 @@ var draw = (node_id) => {
     // adding a event listener for draw 
     const draw_el = document.getElementById("draw");
     draw_el.addEventListener("click", ()=>{
-        console.log("vvv");
+        console.log("draw");
     })
 }
 
@@ -22,7 +22,7 @@ var draw = (node_id) => {
  * @function add
  * lets the user add the weights and checkpoints in the grid
  */
-var add = {
+export var add = {
     options: {
         /**
          * @function weight
@@ -40,4 +40,15 @@ var add = {
             console.log("this function adds checkpoint in the cell")
         }
     }
+}
+
+/**
+ * @function run
+ * runs the algorithm selected by the user
+ */
+export function run(){
+    const run_el = document.getElementById("run");
+    run_el.addEventListener("click", ()=>{
+        console.log("run")
+    })
 }
