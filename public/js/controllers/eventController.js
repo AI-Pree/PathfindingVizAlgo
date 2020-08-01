@@ -7,7 +7,15 @@
  * 
  */
 var draw = (node_id) => {
-    // adding a event listener for the mouse click and drag to draw the wall
+
+    //create a new event for the draw
+
+
+    // adding a event listener for draw 
+    const draw_el = document.getElementById("draw");
+    draw_el.addEventListener("click", ()=>{
+        console.log("vvv");
+    })
 }
 
 /**
@@ -21,6 +29,7 @@ var add = {
          * Add weight to the node selected by the user in real-time
          */
         weight:function(){
+
             console.log("this function add weight in the cell");
         },
         /**

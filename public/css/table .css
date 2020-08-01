@@ -6,6 +6,10 @@ td {
   border:1px solid #283042;
 }
 
+#board{
+    margin-top:20px;
+}
+
 .visited {
     background-color: blueviolet;
 }
