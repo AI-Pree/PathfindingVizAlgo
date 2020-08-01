@@ -1,15 +1,15 @@
 import Board from './models/board.js';
 
 
-
-let nav_height = document.getElementById("nav_html").clientHeight;
+// height of the nav in the browser
+let nav_height = document.getElementById("nav_html").clientHeight + 5; // value of 5 can be desirable depending on the bottom offset
 /**
  * @param height
  * the number of rows in a table
  * the height based on the window size of the browser and dividing it by 25 to assign the height of the cell size in the grid to be 25
  * determinses how many rows can be added in the table
  */
-let height = Math.floor(($(document).height() - nav_height)/25); // subtracting the document height with the nav height in the browser
+let height = Math.floor(($(document).height() - nav_height)/25); // subtracting the document height with the nav height in the browser to remove redundant scrolling from rows in table
 
 /**
  * @param width

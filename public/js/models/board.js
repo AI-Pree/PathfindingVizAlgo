@@ -1,6 +1,7 @@
 import Node from './node.js';
 
 /**
+ * @class Board
  * Class for creating a board
  * Board is used as a grid for the nodes 
  * Node is identified with each cell in the grid
@@ -22,7 +23,6 @@ export default class Board{
      * creates a table with rows and cols from the provided width and height in the index html 
      * It does not return any value
      */
-
     createBoard(){
         var html_grid = ""; // creating a table for the html to visualise the board        
         for(var row = 0; row < this.height; row++){
