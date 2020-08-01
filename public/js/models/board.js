@@ -9,11 +9,19 @@ export default class Board{
     constructor(height, width){
         this.height = height;
         this.width = width;
-        this.nodes = {};
+        this.nodes = {}; // stores the nodes with its node id  as a key value pair where node is the value and node_id is the pair in a dict
         this.grid = [];
         this.start = '';
         this.destination = '';
     }
+
+    /**
+     * @function CreateBoard
+     * @param no
+     * creates a new board
+     * creates a table with rows and cols from the provided width and height in the index html 
+     * It does not return any value
+     */
 
     createBoard(){
         var html_grid = ""; // creating a table for the html to visualise the board        
