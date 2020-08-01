@@ -18,7 +18,6 @@ export default class Board{
 
     /**
      * @function CreateBoard
-     * @param no
      * creates a new board
      * creates a table with rows and cols from the provided width and height in the index html 
      * It does not return any value
