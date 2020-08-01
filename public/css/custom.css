@@ -5,7 +5,7 @@
 }
 
 .btn:hover{
-    color:#577590;
+    color:#757e8d;
 }
 .btn {
     font-weight:600;
@@ -20,4 +20,17 @@
 
 .dropdown-item{
     font-size:smaller;
+}
+
+/*body css*/
+
+body{
+    background-color: #202b3c;
+}
+
+/*container*/
+@media(min-width:1200px){
+    .container {
+        max-width: 100% !important;
+    }
 }
