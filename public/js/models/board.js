@@ -42,4 +42,17 @@ export default class Board{
         board.innerHTML = html_grid; // adding the grid inside the div tag with id board
         console.log("creating.....")
     }
+
+    /**
+     * @function getNodes
+     * access the node in the grid using node_id
+     * @param node_id
+     * @return the node of the passed node_id param
+     */
+    getNodes(node_id){
+        let rowxcol = node_id.split(":");
+        let row = rowxcol[0];
+        let col = rowxcol[1];
+        return this.grid[row][col];
+    }
 }
