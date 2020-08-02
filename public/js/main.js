@@ -1,5 +1,5 @@
 import Board from './models/board.js';
-import {draw, run, add} from './controllers/eventController.js';
+import {draw, run, add, stop, clear} from './controllers/eventController.js';
 
 // height of the nav in the browser
 let nav_height = document.getElementById("nav_html").clientHeight + 30; // value of 5 can be desirable depending on the bottom offset
@@ -31,6 +31,10 @@ var initialise = function(){
     console.log(new_board.getNodes("0:1").status);
     draw();
     run();
+    stop();
+    clear();
+    add.options.weight();
+    add.options.checkpoint();
 }
 console.log("rows: " + height, "columns: " + width);
 console.log("Creating a new board......");

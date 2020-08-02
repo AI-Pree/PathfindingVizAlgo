@@ -1,5 +1,5 @@
-import weight from 'models/weight.js'
-import checkpoint from 'models/checkpoint.js'
+import weight from '../models/weight.js'
+import checkpoint from '../models/checkpoint.js'
 /**
  * @function draw
  *  create a wall in the grid
@@ -22,7 +22,7 @@ export function draw(node_id){
  * @function add
  * lets the user add the weights and checkpoints in the grid
  */
-export var add = {
+export const add = {
     options: {
         /**
          * @function weight
@@ -30,7 +30,7 @@ export var add = {
          * creates a box where you can add the weights based on their priority level
          */
         weight:function(){
-            let weight_el = document.getElementById("add_weight");
+            const weight_el = document.getElementById("add_weight");
             weight_el.addEventListener("click", () => {
                 console.log("this function add weight in the cell");
             });
@@ -41,7 +41,7 @@ export var add = {
          * creates a window box where you can add the checkpoints based on their priority level
          */
         checkpoint:function(){
-            let weight_el = document.getElementById("add_checkpoint");
+            const weight_el = document.getElementById("add_checkpoint");
             weight_el.addEventListener("click", () => {
                 console.log("this function adds checkpoint in the cell")
             });
@@ -64,10 +64,10 @@ export function run(){
  * @function stop
  * stops the running algorithm when clicked on the stop button
  */
-export var stop = () => { 
+export const stop = () => { 
     let stop_el = document.getElementById("stop");
     stop_el.addEventListener("click",()=>{
-        console.log("stop")
+        console.log("stop");
     })
 }
 
@@ -75,9 +75,9 @@ export var stop = () => {
  * @function clear
  * clears all the wall, weights and checkpoint created by the user
  */
-export var clear = () => {
+export const clear = () => {
     let clear_el = document.getElementById("clear");
     clear_el.addEventListener("click", () => {
-        console.log("clear")
+        console.log("clear");
     })
 }
