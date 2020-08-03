@@ -124,9 +124,10 @@ export default class Board{
             let neighbour = ([row + directions[dir][0],col + directions[dir][1]]).join(":");
             // only push the neighbour if its inside the grid table nodes
             if (this.#nodes[neighbour]){
-                result.push(neighbour)
+                result.push(neighbour);
             }           
         }
-        console.log(result)
+        console.log(result);
+        return result;
     }
 }
