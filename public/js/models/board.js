@@ -127,7 +127,6 @@ export default class Board{
                 result.push(neighbour);
             }           
         }
-        console.log(result);
         return result;
     }
 }
