@@ -84,15 +84,49 @@ export default class Board{
     }
 
     /**
+     * @function parseNodeId
+     * parse the string node cell address into number 
+     * @param node_id
+     * the unique id to identify the node 
+     */
+    #parseNodeId(node_id){
+        let cell_address = node_id.split(":");
+        let row = parseInt(cell_address[0]);
+        let col = parseInt(cell_address[1]);
+        return {row:row, col:col};
+    }
+
+    /**
      * @function getNodes
      * access the node in the grid using node_id
      * @param node_id
      * @return the node of the passed node_id param
      */
-    getNodes(node_id){
-        let rowxcol = node_id.split(":");
-        let row = parseInt(rowxcol[0]);
-        let col = parseInt(rowxcol[1]);
-        return this.#grid[row][col];
+    getNodes(node_id){        
+        let value = this.#parseNodeId(node_id);
+        return this.#grid[value.row][value.col];
+    }
+
+    /**
+     * @function getNeighbours
+     * access the neighbour node address in 4 directions, which are east, west, north and south
+     * @param node_id
+     * @returns the addresses of the neighbours of the node
+     */
+    getNeighbours(node_id){
+        let value = this.#parseNodeId(node_id);
+        let row = value.row;
+        let col = value.col;
+        let result = [];
+        let directions = [[0,1], [0, -1], [1, 0], [-1,0]]; // direction of the neignbours
+        console.log("node id: ",node_id);
+        for (var dir = 0; dir < directions.length; dir++){
+            let neighbour = ([row + directions[dir][0],col + directions[dir][1]]).join(":");
+            // only push the neighbour if its inside the grid table nodes
+            if (this.#nodes[neighbour]){
+                result.push(neighbour)
+            }           
+        }
+        console.log(result)
     }
 }
