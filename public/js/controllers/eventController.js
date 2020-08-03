@@ -81,11 +81,12 @@ export const algorithm = () => {
         let name = event.target.text; //getting the choosen algorithm by the user
         let algoName = document.getElementById("algorithm_name"); // dom of the button name that needs to be changed with the picked algorithm
         // doesnt change if its the same algorithm
-        if(algoName.innerHTML != name){
+        if(algoName.innerHTML != name && name){
             algoName.innerHTML = name; // replacing the name with the new picked name
-            console.log(name);
+            console.log(event);
+            algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
         }
-        algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
+        
     });
 };
 
