@@ -8,6 +8,10 @@
     box-shadow: none; 
 }
 
+.btn:disabled:hover{
+    color:#fff;
+}
+
 .btn:hover{
     color:#757e8d;
 }

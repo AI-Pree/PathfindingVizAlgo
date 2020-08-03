@@ -15,8 +15,8 @@ export function draw(node_id){
     const draw_el = document.getElementById("draw");
     draw_el.addEventListener("click", ()=>{
         console.log("draw");
-    })
-}
+    });
+};
 
 /**
  * @function add
@@ -45,20 +45,9 @@ export const add = {
             weight_el.addEventListener("click", () => {
                 console.log("this function adds checkpoint in the cell")
             });
-        }
-    }
-}
-
-/**
- * @function run
- * runs the algorithm selected by the user
- */
-export function run(){
-    const run_el = document.getElementById("run");
-    run_el.addEventListener("click", ()=>{
-        console.log("running....")
-    })
-}
+        },
+    },
+};
 
 /**
  * @function stop
@@ -68,8 +57,8 @@ export const stop = () => {
     let stop_el = document.getElementById("stop");
     stop_el.addEventListener("click",()=>{
         console.log("stop");
-    })
-}
+    });
+};
 
 /**
  * @function clear
@@ -79,16 +68,34 @@ export const clear = () => {
     let clear_el = document.getElementById("clear");
     clear_el.addEventListener("click", () => {
         console.log("clear");
-    })
-}
+    });
+};
 
 /**
  * @function pathfinding
  * select the pathfinding algorithm
  */
 export const algorithm = () => {
-    let algorithm_el = document.getElementById('algorithm');
-    algorithm_el.addEventListener("click",()=>{
-        console.log("choose algorithms");
-    })
-}
+    let algorithm_el = document.getElementById('algorithm_list');
+    algorithm_el.addEventListener("click",(event)=>{     
+        let name = event.target.text; //getting the choosen algorithm by the user
+        let algoName = document.getElementById("algorithm_name"); // dom of the button name that needs to be changed with the picked algorithm
+        // doesnt change if its the same algorithm
+        if(algoName.innerHTML != name){
+            algoName.innerHTML = name; // replacing the name with the new picked name
+            console.log(name);
+        }
+        algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
+    });
+};
+
+/**
+ * @function run
+ * runs the algorithm selected by the user
+ */
+export function run(){
+    const run_el = document.getElementById("run");
+    run_el.addEventListener("click", ()=>{
+        console.log("running....");
+    });
+};
