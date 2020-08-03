@@ -4,6 +4,10 @@
     box-shadow: none;
 }
 
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus{
+    box-shadow: none; 
+}
+
 .btn:hover{
     color:#757e8d;
 }
@@ -33,3 +37,37 @@ body{
         max-width: 100% !important;
     }
 }
+
+/*
+Desiging own drop down menu css
+
+#info-box{    
+}
+
+#algo-name{
+    font-weight: 600;
+    color: #ecf2f9;
+    color: #2d3748;
+}
+
+#info-box .dropdown-menu.show{
+    transform: translate3d(0px, 13px, 0px) !important;
+    padding:0px;
+}
+
+#info-box .dropdown-menu{
+    background-color:#2d3748;
+    color:#fff;
+}
+
+#info-box .dropdown-item{
+    color:#fff;
+}
+
+#info-box .dropdown-item:focus, .dropdown-item:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #202b3c;
+    border-radius:5px;
+}
+*/
