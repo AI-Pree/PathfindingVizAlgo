@@ -28,7 +28,7 @@ var initialise = function(){
     let new_board = new Board(height, width);
     new_board.createBoard();
     console.log("Board of size " + new_board.height + "x" + new_board.width + " has been successfully created.....")
-    console.log(new_board.getNodes("0:1").status);
+    console.log(new_board.getNodes("0:1"));
     draw();
     run();
     stop();
