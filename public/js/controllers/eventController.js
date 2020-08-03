@@ -56,7 +56,7 @@ export const add = {
 export function run(){
     const run_el = document.getElementById("run");
     run_el.addEventListener("click", ()=>{
-        console.log("run")
+        console.log("running....")
     })
 }
 
@@ -79,5 +79,16 @@ export const clear = () => {
     let clear_el = document.getElementById("clear");
     clear_el.addEventListener("click", () => {
         console.log("clear");
+    })
+}
+
+/**
+ * @function pathfinding
+ * select the pathfinding algorithm
+ */
+export const algorithm = () => {
+    let algorithm_el = document.getElementById('algorithm');
+    algorithm_el.addEventListener("click",()=>{
+        console.log("choose algorithms");
     })
 }
