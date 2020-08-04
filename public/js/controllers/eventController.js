@@ -180,7 +180,7 @@ export const clear_el = {
     options:{
         /**
          * @function clear_walls
-         * clear all the walls in the grid
+         * clear all the walls in the grid when clicked on walls button
          */  
         clear_walls: function(board){
             document.getElementById("clear_walls").addEventListener("click",()=>{
@@ -189,7 +189,7 @@ export const clear_el = {
         },    
         /**
          * @function clear_all
-         * clear all the added element in the grid 
+         * clear all the added element in the grid when clicked on all button
          */
         clear_all:function(board){
             document.getElementById("clear_all").addEventListener("click", () => {
