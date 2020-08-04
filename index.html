@@ -75,13 +75,18 @@
                         Add 
                     </button>
                     <div id="add" class="dropdown-menu">
-                        <a id="add_start" class="dropdown-item" href="#">Start Point</a>
-                        <a id="add_stop" class="dropdown-item" href="#">Destination Point</a>                       
-                        <a id="add_weight" class="dropdown-item" href="#">Weight</a>
-                        <a id="add_checkpoint" class="dropdown-item" href="#">Checkpoint</a>
+                        <a id="add_start" class="dropdown-item" href="#"><img src ="public/images/rocket.svg"/> Start Point</a>
+                        <a id="add_stop" class="dropdown-item" href="#"><img src ="public/images/home.svg"/> Destination Point</a>                       
+                        <a id="add_weight" class="dropdown-item" href="#"><img src ="public/images/stop.svg"/> Weight</a>
+                        <a id="add_checkpoint" class="dropdown-item" href="#"><img src ="public/images/location.svg"/> Checkpoint</a>
                     </div>
                 </div>                
-            </li>                    
+            </li>                
+            <li class="nav-item">
+                <button id="clear" class="btn" href="#">
+                    Clear
+                </button>
+            </li>    
             <li class="nav-item">
                 <div id="info-box">
                     <div class = "dropdown">
@@ -94,12 +99,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
-            <li class="nav-item">
-                <button id="clear" class="btn" href="#">
-                    Clear
-                </button>
-            </li>
+            </li>            
         </ul>
     </nav>
     <div class="container">
