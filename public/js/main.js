@@ -1,5 +1,5 @@
 import Board from './models/board.js';
-import {draw, run, add, stop, clear,algorithm, click_address} from './controllers/eventController.js';
+import {draw, run, add, stop, clear,algorithm, clicked_address} from './controllers/eventController.js';
 
 // height of the nav in the browser
 let nav_height = document.getElementById("nav_html").clientHeight + 30; // value of 5 can be desirable depending on the bottom offset
@@ -35,7 +35,7 @@ var initialise = function(){
     stop();
     clear();
     algorithm();
-    click_address();
+    clicked_address(); // remove afterwards
     add.options.weight();
     add.options.checkpoint();
 }

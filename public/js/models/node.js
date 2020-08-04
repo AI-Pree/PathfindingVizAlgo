@@ -26,38 +26,8 @@ export default class Node{
      * cost of the node
      */
     constructor(id, status){
-        this.#id = id;
-        this.#status = status;
-        this.#weight = 0; 
-    }
-
-    // getter for the id attribute
-    get id(){
-        return this.#id;
-    }
-
-    // setter for the id attribute
-    set id(id){
-        this.#id = id;
-    }
-    
-    // getter for the status attribute
-    get status(){
-        return this.#status;
-    }
-
-    //setter for the status attribute
-    set status(status){
-        this.#status = status;
-    }
-
-    // getter for the status attribute
-    get weight(){
-        return this.#weight;
-    }
-
-    //setter for the status attribute
-    set weight(weight){
-        this.#status = weight;
+        this.id = id;
+        this.status = status;
+        this.weight = 0; 
     }
 }

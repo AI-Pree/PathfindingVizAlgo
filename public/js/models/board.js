@@ -6,14 +6,7 @@ import Node from './node.js';
  * Board is used as a grid for the nodes 
  * Node is identified with each cell in the grid
  */
-export default class Board{
-    //private fields
-    #height 
-    #width 
-    #nodes 
-    #grid 
-    #start
-    #destination
+export default class Board{   
 
     /**
      * @constructor 
@@ -23,39 +16,13 @@ export default class Board{
      * determines the number of cols in the table
      */
     constructor(height, width){
-        this.#height = height;
-        this.#width = width;
-        this.#nodes = {}; // stores the nodes with its node id  as a key value pair where node is the value and node_id is the pair in a dict
-        this.#grid = [];
-        this.#start = ''; // holds the cell address of the start node in the table
-        this.#destination = ''; // holds the cell address of the destination node in the table
-    }
-
-    //getter and setters
-
-    get height(){
-        return this.#height;
-    }
-
-    set height(height){
-        this.#height = height;
-    }
-
-    get width(){
-        return this.#width;
-    }
-
-    set width(width){
-        this.#width = width;
-    }
-
-    get grid(){
-        return this.#grid;
-    }
-
-    set grid(grid){
-        this.#grid = grid;
-    }
+        this.height = height;
+        this.width = width;
+        this.nodes = {}; // stores the nodes with its node id  as a key value pair where node is the value and node_id is the pair in a dict
+        this.grid = [];
+        this.start = ''; // holds the cell address of the start node in the table
+        this.destination = ''; // holds the cell address of the destination node in the table
+    }   
 
     /**
      * @function CreateBoard
@@ -72,7 +39,7 @@ export default class Board{
                 let node_id = row + ":" + col, node_status, new_node;                
                 node_status = "unvisited";
                 new_node = new Node(node_id, node_status); //creating node for each cell in the grid
-                this.#nodes[node_id]=new_node; // adding all the nodes to a dict for easier use of accessing the value
+                this.nodes[node_id]=new_node; // adding all the nodes to a dict for easier use of accessing the value
                 curr_html_row += '<td id='+ '"' + node_id + '"' + " class= " + '"' + node_status +'"' + '></td>';
                 curr_row.push(new_node);
             };
@@ -103,8 +70,8 @@ export default class Board{
      * @return the node of the passed node_id param
      */
     getNodes(node_id){        
-        let value = this.#parseNodeId(node_id);
-        return this.#grid[value.row][value.col];
+        let value = this.parseNodeId(node_id);
+        return this.grid[value.row][value.col];
     }
 
     /**
@@ -123,7 +90,7 @@ export default class Board{
         for (var dir = 0; dir < directions.length; dir++){
             let neighbour = ([row + directions[dir][0],col + directions[dir][1]]).join(":");
             // only push the neighbour if its inside the grid table nodes
-            if (this.#nodes[neighbour]){
+            if (this.nodes[neighbour]){
                 result.push(neighbour);
             }           
         }

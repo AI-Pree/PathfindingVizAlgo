@@ -10,6 +10,10 @@ td {
     margin-top:20px;
 }
 
-.visited {
+.wall {
     background-color: blueviolet;
+}
+
+.unvisited:hover{
+  background-color:#000;
 }

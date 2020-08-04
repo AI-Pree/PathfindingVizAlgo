@@ -4,10 +4,11 @@ import Weight from '../models/weight.js';
 import Checkpoint from '../models/checkpoint.js';
 /**
  * @function draw
- *  create a wall in the grid
+ * create a wall in the grid
+ * changes the class name of the cell with unvisited and the status of the node
+ * to wall after clicked
  * @param node_id
- *  cell address in the table
- * 
+ * cell address in the table
  */
 export function draw(node_id){
     //create a new event for the draw
@@ -16,7 +17,9 @@ export function draw(node_id){
     // adding a event listener for draw 
     const draw_el = document.getElementById("draw");
     draw_el.addEventListener("click", ()=>{
-        console.log("draw");
+        //clicked node
+        let node_cl = clicked_address();
+        console.log(node_cl);
     });
 };
 
@@ -119,13 +122,14 @@ export function run(){
 };
 
 /**
- * @function click_address
+ * @function clicked_address
  * gets the address of the cell addresss in the table that has been clicked
  */
-export function click_address(){
-    const click_cell = document.querySelectorAll('.unvisited').forEach(cell=>{
+export function clicked_address(){
+    document.querySelectorAll('.unvisited').forEach(cell=>{
         cell.addEventListener("click", event => {
-            console.log("cell-address: ", event.target.id)
+            console.log("cell-address: ", event.target.id);
+            return event.target.id;
         });
     });
 };
