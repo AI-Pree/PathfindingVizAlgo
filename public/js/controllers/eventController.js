@@ -117,3 +117,15 @@ export function run(){
         console.log("running....");
     });
 };
+
+/**
+ * @function click_address
+ * gets the address of the cell addresss in the table that has been clicked
+ */
+export function click_address(){
+    const click_cell = document.querySelectorAll('.unvisited').forEach(cell=>{
+        cell.addEventListener("click", event => {
+            console.log("cell-address: ", event.target.id)
+        });
+    });
+};
