@@ -25,7 +25,7 @@ export default class Board{
         this.run = false;
         this.stop = true;
         this.status = true;
-        this.walls = {};
+        this.walls = [];
         this.weights = {};
         this.checkpoints = {};
     }   

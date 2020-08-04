@@ -13,7 +13,7 @@ import Board from '../models/board.js';
  */
 export function drawWall(board){    
     let is_drawing = false; //check if the user still in drawing mode
-    let wall_nodes = {};
+    let wall_nodes = [];
     document.querySelectorAll('.unvisited').forEach((cell)=>{
         //when user clicked the mouse
         cell.addEventListener("mousedown", (event) => {
@@ -22,7 +22,7 @@ export function drawWall(board){
                 console.log("cell-address: ", event.target.id);
                 let wall_node = board.getNodes(event.target.id);
                 wall_node.status = "wall";
-                wall_nodes[event.target.id] = wall_node;
+                wall_nodes.push(wall_node);
                 cell.setAttribute("class", "wall");
             }  
             is_drawing = true;
@@ -34,7 +34,7 @@ export function drawWall(board){
                 console.log("cell-address: ", event.target.id);
                 let wall_node = board.getNodes(event.target.id);
                 wall_node.status = "wall";
-                wall_nodes[event.target.id] = wall_node;
+                wall_nodes.push(wall_node);
                 cell.setAttribute("class", "wall");
             }
         });
@@ -152,14 +152,20 @@ export const stop = (board) => {
 export const clear = (board) => {
     let clear_el = document.getElementById("clear");
     clear_el.addEventListener("click", () => {
-        //for now added for wall only
+        //changing the class the cell from walls to unvisited
         document.querySelectorAll('.wall').forEach((cell)=>{
-            cell.setAttribute("class", "unvisited");
-            Object.entries(board.walls).forEach(([key, value])=>{
-                value.status = "unvisited";
-            });
+            cell.setAttribute("class", "unvisited");            
         });
-        console.log(board.grid);
+        //changing the status of the node back to unvisited in the board object        
+        board.walls.forEach((cell)=>{
+            cell.status = "unvisited";
+        })
+        //clearing all the walls, weights, checkpoints, paths, start and destination point
+        board.walls = [];
+        board.weights = {};
+        board.checkpoints = {};
+        board.start = "";
+        board.destination = "";
     });
 };
 
