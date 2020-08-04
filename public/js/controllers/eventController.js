@@ -1,5 +1,7 @@
 import weight from '../models/weight.js'
 import checkpoint from '../models/checkpoint.js'
+import Weight from '../models/weight.js';
+import Checkpoint from '../models/checkpoint.js';
 /**
  * @function draw
  *  create a wall in the grid
@@ -32,7 +34,15 @@ export const add = {
         weight:function(){
             const weight_el = document.getElementById("add_weight");
             weight_el.addEventListener("click", () => {
-                console.log("this function add weight in the cell");
+                console.log("this function adds weight in the cell")
+                //creates a new weight instance
+                let cost_of_weight = 5;
+                let node_address = "2:3";
+                let new_weight = new Weight(cost_of_weight, node_address);
+                console.log(new_weight);
+
+                //trigger a new event after clicked on the add weight button
+                /* Add code here */
             });
         },
         /**
@@ -41,9 +51,17 @@ export const add = {
          * creates a window box where you can add the checkpoints based on their priority level
          */
         checkpoint:function(){
-            const weight_el = document.getElementById("add_checkpoint");
-            weight_el.addEventListener("click", () => {
+            const checkpoint_el = document.getElementById("add_checkpoint");
+            checkpoint_el.addEventListener("click", () => {
                 console.log("this function adds checkpoint in the cell")
+
+                let node_address = "2:3";
+                //trigger a new event after clicked on the add checkpoint button
+                /* Add code here */
+
+                //creates a new checkpoint instance
+                let new_checkpoint = new Checkpoint(node_address);
+                console.log(new_checkpoint)
             });
         },
     },
@@ -83,7 +101,7 @@ export const algorithm = () => {
         // doesnt change if its the same algorithm and the name is empty
         if(algoName.innerHTML != name && name){
             algoName.innerHTML = name; // replacing the name with the new picked name
-            console.log(event);
+            console.log(name);
             algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
         }        
     });
