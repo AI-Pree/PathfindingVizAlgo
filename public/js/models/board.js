@@ -43,7 +43,7 @@ export default class Board{
                 curr_html_row += '<td id='+ '"' + node_id + '"' + " class= " + '"' + node_status +'"' + '></td>';
                 curr_row.push(new_node);
             };
-            this.#grid.push(curr_row);
+            this.grid.push(curr_row);
             html_grid += curr_html_row + '</tr>';
         };
         document.getElementById('board').innerHTML = html_grid; // adding the grid inside the div tag to table with id board
@@ -56,7 +56,7 @@ export default class Board{
      * @param node_id
      * the unique id to identify the node 
      */
-    #parseNodeId(node_id){
+    parseNodeId(node_id){
         let cell_address = node_id.split(":");
         let row = parseInt(cell_address[0]);
         let col = parseInt(cell_address[1]);
@@ -81,7 +81,7 @@ export default class Board{
      * @returns the addresses of the neighbours of the node
      */
     getNeighbours(node_id){
-        let value = this.#parseNodeId(node_id);
+        let value = this.parseNodeId(node_id);
         let row = value.row;
         let col = value.col;
         let result = [];

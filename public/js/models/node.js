@@ -9,11 +9,7 @@
  *  weighed is the node that has higher cost than other nodes
  *  checkpoint is the node which needs to be visited before reaching the final destination
  */
-export default class Node{
-    //private fields
-    #id;
-    #status;
-    #weight;
+export default class Node{    
     /**
      * 
      * @param id 
