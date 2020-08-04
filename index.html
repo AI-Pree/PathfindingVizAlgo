@@ -75,37 +75,27 @@
                         Add 
                     </button>
                     <div id="add" class="dropdown-menu">
-                        <a id="add_start" class="dropdown-item" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-                                <path fill="green" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path>
-                            </svg> 
-                            Start Point
-                        </a>
-                        <a id="add_destination" class="dropdown-item disabled" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-                                <path fill="red" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path>
-                            </svg> 
-                            Destination Point
-                        </a>                       
-                        <a id="add_weight" class="dropdown-item" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-                                <path fill="orange" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path>
-                            </svg> 
-                            Weight
-                        </a>
-                        <a id="add_checkpoint" class="dropdown-item" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-                                <path fill="yellow" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path>
-                            </svg> 
-                            Checkpoint
-                        </a>
+                        <a id="add_start" class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24"><path fill="green" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path></svg>Start Point</a>
+                        <a id="add_destination" class="dropdown-item disabled" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24"><path fill="red" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path></svg>Destination Point</a>                       
+                        <a id="add_weight" class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24"><path fill="orange" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path></svg>Weight</a>
+                        <a id="add_checkpoint" class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24"><path fill="yellow" fill-rule="evenodd" d="M5.75 4A1.75 1.75 0 004 5.75v4.5c0 .966.784 1.75 1.75 1.75h4.5A1.75 1.75 0 0012 10.25v-4.5A1.75 1.75 0 0010.25 4h-4.5z"></path></svg>Checkpoint</a>
                     </div>
                 </div>                
             </li>                
             <li class="nav-item">
-                <button id="clear" class="btn" href="#">
-                    Clear
-                </button>
+                <div class="dropdown">
+                    <button id="clear" type="button" class='btn dropdown-toggle' href="#" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        Clear
+                    </button>
+                    <div id="clear_items" class="dropdown-menu">
+                        <a id="clear_walls" class="dropdown-item" href="#">Walls</a>
+                        <a id="clear_checkpoints" class="dropdown-item" href="#">Checkpoints</a>
+                        <a id="clear_weights" class="dropdown-item" href="#">Weights</a>
+                        <a id="clear_start" class="dropdown-item" href="#">Start Point</a>
+                        <a id="clear_destination" class="dropdown-item" href="#">Destination Point</a>
+                        <a id="clear_all" class="dropdown-item" href="#">All</a>
+                    </div>
+                </div>                
             </li>    
             <li class="nav-item">
                 <div id="info-box">
