@@ -126,7 +126,7 @@ export function run(board){
         console.log("stop: ",board.stop);
         console.log("running....");
         // pass new upgraded grid after the run button is clicked
-        console.log(board.grid);
+        console.log("Added info grid: ", board.grid);
     });
 };
 
@@ -166,6 +166,7 @@ export const clear = (board) => {
         board.checkpoints = {};
         board.start = "";
         board.destination = "";
+        console.log("clear grid: ", board.grid);
     });
 };
 
