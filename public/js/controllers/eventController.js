@@ -8,6 +8,8 @@ import Board from '../models/board.js';
  * to wall after clicked
  * @param node_id
  * cell address in the table
+ * @returns wall_nodes
+ * it the address of all the node that has wall as a status
  */
 export function drawWall(board){    
     let is_drawing = false;
@@ -39,6 +41,7 @@ export function drawWall(board){
             is_drawing = false;
         });
     });
+    return wall_nodes;
 };
 
 /**
@@ -101,6 +104,8 @@ export function run(board){
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
         console.log("running....");
+        // pass new upgraded grid after the run button is clicked
+        console.log(board.grid);
     });
 };
 
