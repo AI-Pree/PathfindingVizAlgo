@@ -1,5 +1,5 @@
 import Board from './models/board.js';
-import {draw, run, add, stop, clear,algorithm, clicked_address} from './controllers/eventController.js';
+import {drawWall, run, add, stop, clear,algorithm} from './controllers/eventController.js';
 
 // height of the nav in the browser
 let nav_height = document.getElementById("nav_html").clientHeight + 30; // value of 5 can be desirable depending on the bottom offset
@@ -29,15 +29,17 @@ var initialise = function(){
     new_board.createBoard();
     console.log("Board of size " + new_board.height + "x" + new_board.width + " has been successfully created.....")
     console.log(new_board.getNodes("0:1"));
-    console.log(new_board.getNeighbours("0:2"));
-    draw();
-    run();
-    stop();
-    clear();
+    console.log(new_board.getNeighbours("0:2"));    
+    console.log("run: ",new_board.run);
+    console.log("stop: ",new_board.stop);
+    run(new_board);   
+    drawWall(new_board);
+    stop(new_board);
+    clear(new_board);
     algorithm();
-    clicked_address(); // remove afterwards
-    add.options.weight();
-    add.options.checkpoint();
+    add.options.weight(new_board);
+    add.options.checkpoint(new_board);
+    console.log(new_board.grid)
 }
 console.log("rows: " + height, "columns: " + width);
 console.log("Creating a new board......");

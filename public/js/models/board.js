@@ -22,6 +22,9 @@ export default class Board{
         this.grid = [];
         this.start = ''; // holds the cell address of the start node in the table
         this.destination = ''; // holds the cell address of the destination node in the table
+        this.run = false;
+        this.stop = true;
+        this.status = true;
     }   
 
     /**

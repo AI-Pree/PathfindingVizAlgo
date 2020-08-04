@@ -1,7 +1,6 @@
-import weight from '../models/weight.js'
-import checkpoint from '../models/checkpoint.js'
 import Weight from '../models/weight.js';
 import Checkpoint from '../models/checkpoint.js';
+import Board from '../models/board.js';
 /**
  * @function draw
  * create a wall in the grid
@@ -10,16 +9,35 @@ import Checkpoint from '../models/checkpoint.js';
  * @param node_id
  * cell address in the table
  */
-export function draw(node_id){
-    //create a new event for the draw
-
-
-    // adding a event listener for draw 
-    const draw_el = document.getElementById("draw");
-    draw_el.addEventListener("click", ()=>{
-        //clicked node
-        let node_cl = clicked_address();
-        console.log(node_cl);
+export function drawWall(board){    
+    let is_drawing = false;
+    let wall_nodes = {};
+    document.querySelectorAll('.unvisited').forEach((cell)=>{
+        //when user clicked the mouse
+        cell.addEventListener("mousedown", (event) => {  
+            if(event.target.className != "wall"){
+                console.log("cell-address: ", event.target.id);
+                let wall_node = board.getNodes(event.target.id);
+                wall_node.status = "wall";
+                wall_nodes[event.target.id] = wall_node;
+                cell.setAttribute("class", "wall");
+            }  
+            is_drawing = true;
+        });
+        //when user is moving the mouse in clicked position
+        cell.addEventListener("mousemove", (event) =>{
+            if (is_drawing && event.target.className != "wall"){
+                console.log("cell-address: ", event.target.id);
+                let wall_node = board.getNodes(event.target.id);
+                wall_node.status = "wall";
+                wall_nodes[event.target.id] = wall_node;
+                cell.setAttribute("class", "wall");
+            }
+        });
+        //when user released the mouse click
+        cell.addEventListener("mouseup", ()=>{
+            is_drawing = false;
+        });
     });
 };
 
@@ -34,7 +52,7 @@ export const add = {
          * Add weight to the node selected by the user in real-time
          * creates a box where you can add the weights based on their priority level
          */
-        weight:function(){
+        weight:function(board){
             const weight_el = document.getElementById("add_weight");
             weight_el.addEventListener("click", () => {
                 console.log("this function adds weight in the cell")
@@ -53,7 +71,7 @@ export const add = {
          * Add checkpoint to the node selected by the user in real-time
          * creates a window box where you can add the checkpoints based on their priority level
          */
-        checkpoint:function(){
+        checkpoint:function(board){
             const checkpoint_el = document.getElementById("add_checkpoint");
             checkpoint_el.addEventListener("click", () => {
                 console.log("this function adds checkpoint in the cell")
@@ -71,13 +89,33 @@ export const add = {
 };
 
 /**
+ * @function run
+ * runs the algorithm selected by the user
+ */
+export function run(board){
+    const run_el = document.getElementById("run");    
+    run_el.addEventListener("click", ()=>{
+        board.run = true;
+        board.stop = false;
+        board.status = false;
+        console.log("run: ",board.run);
+        console.log("stop: ",board.stop);
+        console.log("running....");
+    });
+};
+
+/**
  * @function stop
  * stops the running algorithm when clicked on the stop button
  */
-export const stop = () => { 
+export const stop = (board) => { 
     let stop_el = document.getElementById("stop");
     stop_el.addEventListener("click",()=>{
-        console.log("stop");
+        board.stop = true;
+        board.run = false;
+        board.status = true;
+        console.log("run: ",board.run);
+        console.log("stop: ",board.stop);
     });
 };
 
@@ -85,7 +123,7 @@ export const stop = () => {
  * @function clear
  * clears all the wall, weights and checkpoint created by the user
  */
-export const clear = () => {
+export const clear = (board) => {
     let clear_el = document.getElementById("clear");
     clear_el.addEventListener("click", () => {
         console.log("clear");
@@ -107,29 +145,5 @@ export const algorithm = () => {
             console.log(name);
             algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
         }        
-    });
-};
-
-/**
- * @function run
- * runs the algorithm selected by the user
- */
-export function run(){
-    const run_el = document.getElementById("run");
-    run_el.addEventListener("click", ()=>{
-        console.log("running....");
-    });
-};
-
-/**
- * @function clicked_address
- * gets the address of the cell addresss in the table that has been clicked
- */
-export function clicked_address(){
-    document.querySelectorAll('.unvisited').forEach(cell=>{
-        cell.addEventListener("click", event => {
-            console.log("cell-address: ", event.target.id);
-            return event.target.id;
-        });
     });
 };
