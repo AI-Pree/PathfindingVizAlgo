@@ -12,11 +12,12 @@ import Board from '../models/board.js';
  * it the address of all the node that has wall as a status
  */
 export function drawWall(board){    
-    let is_drawing = false;
+    let is_drawing = false; //check if the user still in drawing mode
     let wall_nodes = {};
     document.querySelectorAll('.unvisited').forEach((cell)=>{
         //when user clicked the mouse
-        cell.addEventListener("mousedown", (event) => {  
+        cell.addEventListener("mousedown", (event) => {
+            //when visited the same wall node it doesnt need to set class as wall  
             if(event.target.className != "wall"){
                 console.log("cell-address: ", event.target.id);
                 let wall_node = board.getNodes(event.target.id);
@@ -28,6 +29,7 @@ export function drawWall(board){
         });
         //when user is moving the mouse in clicked position
         cell.addEventListener("mousemove", (event) =>{
+            //when visited the same wall node it doesnt need to set class as wall  
             if (is_drawing && event.target.className != "wall"){
                 console.log("cell-address: ", event.target.id);
                 let wall_node = board.getNodes(event.target.id);
@@ -41,7 +43,7 @@ export function drawWall(board){
             is_drawing = false;
         });
     });
-    return wall_nodes;
+    board.walls = wall_nodes;
 };
 
 /**
@@ -50,6 +52,25 @@ export function drawWall(board){
  */
 export const add = {
     options: {
+        /**@function start
+         * Add start point in the grid
+         */
+        start:function(board){
+            const start_el = document.getElementById("start")
+            start_el.addEventListener("click",()=>{
+                console.log("start");
+            })
+        },
+        /**
+         * @function destination
+         * Add destination point in the grid
+         */
+        destination:function(board){
+            const destination_el = document.getElementById("destination")
+            destination_el.addEventListener("click", ()=>{
+                console.log("destination")
+            })
+        },
         /**
          * @function weight
          * Add weight to the node selected by the user in real-time
@@ -131,7 +152,14 @@ export const stop = (board) => {
 export const clear = (board) => {
     let clear_el = document.getElementById("clear");
     clear_el.addEventListener("click", () => {
-        console.log("clear");
+        //for now added for wall only
+        document.querySelectorAll('.wall').forEach((cell)=>{
+            cell.setAttribute("class", "unvisited");
+            Object.entries(board.walls).forEach(([key, value])=>{
+                value.status = "unvisited";
+            });
+        });
+        console.log(board.grid);
     });
 };
 
