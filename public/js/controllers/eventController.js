@@ -2,6 +2,8 @@ import Weight from '../models/weight.js';
 import Checkpoint from '../models/checkpoint.js';
 import Board from '../models/board.js';
 
+
+//obstacles dict
 var obstacles = {
     "wall":"wall",
     "start":"start",
@@ -121,7 +123,7 @@ export const add = {
                         }
                     });
                     cell.addEventListener("mousedown", (event) => {
-                        // cannot add more than one start point
+                        // cannot add more than one destination point
                         if (destinaiton_point === "") {
                             destinaiton_point = event.target.id;
                             board.destination = destinaiton_point;
@@ -149,13 +151,48 @@ export const add = {
          */
         weight:function(board){
             const weight_el = document.getElementById("add_weight");
+            let is_adding_weight = false;
+            let weight_points = {};
+            let weight_point = ""; // stores object Node
+
             weight_el.addEventListener("click", () => {
-                console.log("this function adds weight in the cell")
-                //creates a new weight instance
-                let cost_of_weight = 5;
-                let node_address = "2:3";
-                let new_weight = new Weight(cost_of_weight, node_address);
-                console.log(new_weight);
+                is_adding_weight = true;
+                document.querySelectorAll(".unvisited").forEach((cell) => {
+                    cell.addEventListener("mousemove", (event) => {
+                        let visited = "";
+                        if (is_adding_weight) {
+                            visited = event.target.className;
+                            if(visited != event.target.className)
+                                console.log("hovering around cell: ", event.target.id)
+                        }
+                    });
+                    cell.addEventListener("mousedown", (event) => {
+                        // cannot add more than one weight point for now
+                        if (Object.keys(weight_points).length == 0) {
+                            weight_point = board.getNodes(event.target.id);
+                            weight_points[event.target.id] = weight_point;
+                            board.weights[event.target.id] = weight_point;
+                            cell.setAttribute("class","weight")
+                            console.log("weight point has been added: ", event.target.id);
+                            //user is unable to click the button after the destination point has been added
+                            if(Object.keys(weight_points).length > 0){                                
+                                weight_el.setAttribute("class","dropdown-item disabled")
+                            }
+                        }
+                        else {
+                            console.log("weight point cannnot be added")
+                        }
+                    });
+                    cell.addEventListener("mouseup", () => {
+                        is_adding_weight = false;
+                    });
+                });       
+                // console.log("this function adds weight in the cell")
+                // //creates a new weight instance
+                // let cost_of_weight = 5;
+                // let node_address = "2:3";
+                // let new_weight = new Weight(cost_of_weight, node_address);
+                // console.log(new_weight);
 
                 //trigger a new event after clicked on the add weight button
                 /* Add code here */
@@ -168,16 +205,54 @@ export const add = {
          */
         checkpoint:function(board){
             const checkpoint_el = document.getElementById("add_checkpoint");
+            let is_adding_checkpoint = false;
+            let checkpoint_points = {};
+            let checkpoint_point = ""; // stores object Node
+
             checkpoint_el.addEventListener("click", () => {
-                console.log("this function adds checkpoint in the cell")
+                is_adding_checkpoint = true;
+                document.querySelectorAll(".unvisited").forEach((cell) => {
+                    cell.addEventListener("mousemove", (event) => {
+                        let visited = "";
+                        if (is_adding_checkpoint) {
+                            visited = event.target.className;
+                            if(visited != event.target.className)
+                                console.log("hovering around cell: ", event.target.id);
+                        }
+                    });
+                    cell.addEventListener("mousedown", (event) => {
+                        // cannot add more than one checkpoint point for now
+                        if (Object.keys(checkpoint_points).length == 0) {
+                            checkpoint_point = board.getNodes(event.target.id);
+                            checkpoint_points[event.target.id] = checkpoint_point;
+                            board.checkpoints[event.target.id] = checkpoint_point;
+                            cell.setAttribute("class","checkpoint")
+                            console.log("checkpoint point has been added: ", event.target.id);
+                            //user is unable to click the button after the checkpoint point has been added
+                            if(Object.keys(checkpoint_points).length > 0){                                
+                                checkpoint_el.setAttribute("class","dropdown-item disabled")
+                            }
+                        }
+                        else {
+                            console.log("checkpoint point cannnot be added")
+                        }
+                    });
+                    cell.addEventListener("mouseup", () => {
+                        is_adding_checkpoint = false;
+                    });
+                });
 
-                let node_address = "2:3";
-                //trigger a new event after clicked on the add checkpoint button
-                /* Add code here */
 
-                //creates a new checkpoint instance
-                let new_checkpoint = new Checkpoint(node_address);
-                console.log(new_checkpoint)
+
+                // console.log("this function adds checkpoint in the cell")
+
+                // let node_address = "2:3";
+                // //trigger a new event after clicked on the add checkpoint button
+                // /* Add code here */
+
+                // //creates a new checkpoint instance
+                // let new_checkpoint = new Checkpoint(node_address);
+                // console.log(new_checkpoint)
             });
         },
     },
