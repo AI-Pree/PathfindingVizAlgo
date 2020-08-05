@@ -14,12 +14,11 @@ const obstacles = {
 
 //clear dict
 const clear_items = {
-    "wall":"wall",
-    "start":"start",
-    "destination":"destination",
-    "weight":"weight",
-    "checkpoint":"checkpoint",
-    "all":"",
+    "Walls":"clear_walls",
+    "Start":"clear_start",
+    "Destination":"clear_destination",
+    "Weight":"clear_weights",
+    "Checkpoint":"clear_checkpoints",
 }
 /**
  * @function draw
@@ -322,15 +321,19 @@ const clear={
             //changing the class the cell from walls to unvisited
             document.querySelectorAll('.start').forEach((cell)=>{
                 cell.setAttribute("class", "unvisited");
-            })
+            });
+
             //changing the status of the node back to unvisited in the board object 
             board.getNodes(board.start).status = "unvisited";
             console.log("start", board.start);
+
             //emptying the start field in board
             board.start = "";
-            document.getElementById("add_start").setAttribute("class","dropdown-item")
+
+            //make add start point button clickable
+            document.getElementById("add_start").setAttribute("class","dropdown-item");
             console.log("clear grid: ", board.grid);
-            console.log(board.start)    
+            console.log(board.start);
         },
         /**
          * @function clear_destination
@@ -338,20 +341,25 @@ const clear={
          */  
         clear_destination: function(board){
             //changing the class the cell from walls to unvisited
-            document.querySelectorAll('.wall').forEach((cell) => {
+            document.querySelectorAll('.destination').forEach((cell) => {
                 cell.setAttribute("class", "unvisited");
             });
-            //changing the status of the node back to unvisited in the board object        
-            board.walls.forEach((cell) => {
-                cell.status = "unvisited";
-            })
-            //clearing all the walls
-            board.walls = [];
+
+            //changing the status of the node back to unvisited in the board object 
+            board.getNodes(board.destination).status = "unvisited";
+            console.log("start", board.destination);
+
+            //clearing the destination
+            board.destination = "";
+
+            //make add start point button clickable
+            document.getElementById("add_destination").setAttribute("class","dropdown-item");
+
             console.log("clear grid: ", board.grid);
             console.log(board.walls)    
         },
         /**
-         * @function clear_walls
+         * @function clear_weights
          * clear all the walls in the grid
          */  
         clear_weights: function(board){
@@ -386,7 +394,6 @@ const clear={
             console.log("clear grid: ", board.grid);
             console.log(board.walls)    
         },
-
     }     
 }
 
@@ -394,64 +401,18 @@ const clear={
  * @function clear_el
  * clear event listener all the wall, weights and checkpoint created by the user
  */
-export const clear_el = {
-    options:{
-        /**
-         * @function clear_walls
-         * clear all the walls in the grid when clicked on walls button
-         */  
-        clear_walls: function(board){
-            document.getElementById("clear_walls").addEventListener("click",()=>{
-                clear.options.clear_walls(board);
-            });      
-        },
-        /**
-         * @function clear_start
-         * clear the start point in the grid when clicked on start button
-         */  
-        clear_start: function(board){
-            document.getElementById("clear_start").addEventListener("click",()=>{
-                clear.options.clear_start(board);
-            });      
-        },
-        /**
-         * @function clear_destination
-         * clear the start point in the grid when clicked on start button
-         */  
-        clear_start: function(board){
-            document.getElementById("clear_start").addEventListener("click",()=>{
-                clear.options.clear_start(board);
-            });      
-        },
-        /**
-         * @function clear_weights
-         * clear the start point in the grid when clicked on start button
-         */  
-        clear_weights: function(board){
-            document.getElementById("clear_start").addEventListener("click",()=>{
-                clear.options.clear_start(board);
-            });      
-        },
-        /**
-         * @function clear_checkpoints
-         * clear the start point in the grid when clicked on start button
-         */  
-        clear_checkpoints: function(board){
-            document.getElementById("clear_start").addEventListener("click",()=>{
-                clear.options.clear_start(board);
-            });      
-        },
-        /**
-         * @function clear_all
-         * clear all the added element in the grid when clicked on all button
-         */
-        clear_all:function(board){
-            document.getElementById("clear_all").addEventListener("click", () => {
-                clear.options.clear_walls(board);
-            });
+export function clear_el(board){
+    document.getElementById("clear_items").addEventListener("click",(event)=>{
+        let value = event.target.text;
+        if(value != "All"){          
+            clear.options[clear_items[value]](board);
         }
-
-    }        
+        else{
+            Object.entries(clear.options).forEach(([key,value])=>{
+                value(board);
+            });
+        };
+    });
 };
 
 /**
