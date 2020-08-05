@@ -1,6 +1,14 @@
 import Weight from '../models/weight.js';
 import Checkpoint from '../models/checkpoint.js';
 import Board from '../models/board.js';
+
+var obstacles = {
+    "wall":"wall",
+    "start":"start",
+    "destination":"destination",
+    "weight":"weight",
+    "checkpoint":"checkpoint",
+}
 /**
  * @function draw
  * create a wall in the grid
@@ -17,7 +25,7 @@ export function drawWall(board){
         //when user clicked the mouse
         cell.addEventListener("mousedown", (event) => {
             //when visited the same wall node it doesnt need to set class as wall  
-            if(event.target.className != "wall"){
+            if(!obstacles[event.target.className]){
                 console.log("cell-address: ", event.target.id);
                 let wall_node = board.getNodes(event.target.id);
                 wall_node.status = "wall";
@@ -29,7 +37,7 @@ export function drawWall(board){
         //when user is moving the mouse in clicked position
         cell.addEventListener("mousemove", (event) =>{
             //when visited the same wall node it doesnt need to set class as wall  
-            if (is_drawing && event.target.className != "wall"){
+            if (is_drawing && !obstacles[event.target.className]){
                 console.log("cell-address: ", event.target.id);
                 let wall_node = board.getNodes(event.target.id);
                 wall_node.status = "wall";
@@ -54,19 +62,84 @@ export const add = {
          * Add start point in the grid
          */
         start:function(board){
-            const start_el = document.getElementById("start")
-            start_el.addEventListener("click",()=>{
-                console.log("start");
-            })
+            const start_el = document.getElementById("add_start")
+            let is_adding_start = false;
+            let start_point = "";
+                         
+            start_el.addEventListener("click", () => {
+                is_adding_start = true;
+                document.querySelectorAll(".unvisited").forEach((cell) => {
+                    cell.addEventListener("mousemove", (event) => {
+                        let visited = "";
+                        if (is_adding_start && visited != event.target.className) {
+                            visited = event.target.className;
+                            console.log("hovering around cell: ", event.target.id)
+                        }
+                    });
+                    cell.addEventListener("mousedown", (event) => {
+                        // cannot add more than one start point and cell that has already got obstables
+                        if (start_point === "" ) {
+                            start_point = event.target.id;
+                            board.start = start_point;
+                            cell.setAttribute("class","start")
+                            console.log("start point has been added: ", event.target.id);
+                            //user is unable to click the button after the start point has been added
+                            if(start_point !== ""){                                
+                                start_el.setAttribute("class","dropdown-item disabled")
+                            }
+                        }
+                        else {
+                            console.log("start point cannnot be added")
+                        }
+                    });
+                    cell.addEventListener("mouseup", () => {
+                        is_adding_start = false;
+
+                        // need to remove event listener here
+                    });                    
+                });                
+            });
         },
         /**
          * @function destination
          * Add destination point in the grid
          */
         destination:function(board){
-            const destination_el = document.getElementById("destination")
-            destination_el.addEventListener("click", ()=>{
-                console.log("destination")
+            const destination_el = document.getElementById("add_destination")
+            let is_adding_destination = false;
+            let destinaiton_point = "";
+
+            destination_el.addEventListener("click", ()=>{                
+                is_adding_destination = true;
+                document.querySelectorAll(".unvisited").forEach((cell) => {
+                    cell.addEventListener("mousemove", (event) => {
+                        let visited = "";
+                        if (is_adding_destination) {
+                            visited = event.target.className;
+                            if(visited != event.target.className)
+                                console.log("hovering around cell: ", event.target.id)
+                        }
+                    });
+                    cell.addEventListener("mousedown", (event) => {
+                        // cannot add more than one start point
+                        if (destinaiton_point === "") {
+                            destinaiton_point = event.target.id;
+                            board.destination = destinaiton_point;
+                            cell.setAttribute("class","destination")
+                            console.log("destination point has been added: ", event.target.id);
+                            //user is unable to click the button after the destination point has been added
+                            if(destinaiton_point !== ""){                                
+                                destination_el.setAttribute("class","dropdown-item disabled")
+                            }
+                        }
+                        else {
+                            console.log("destination point cannnot be added")
+                        }
+                    });
+                    cell.addEventListener("mouseup", () => {
+                        is_adding_destination = false;
+                    });
+                });                
             })
         },
         /**

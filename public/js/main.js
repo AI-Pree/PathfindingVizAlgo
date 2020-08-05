@@ -38,6 +38,8 @@ var initialise = function(){
     clear_el.options.clear_walls(new_board);
     clear_el.options.clear_all(new_board);
     algorithm();
+    add.options.start(new_board);
+    add.options.destination(new_board);
     add.options.weight(new_board);
     add.options.checkpoint(new_board);
 }
