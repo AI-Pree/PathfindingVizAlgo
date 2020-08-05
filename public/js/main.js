@@ -36,6 +36,7 @@ var initialise = function(){
     run(new_board);
     stop(new_board);
     clear_el.options.clear_walls(new_board);
+    clear_el.options.clear_start(new_board);
     clear_el.options.clear_all(new_board);
     algorithm();
     add.options.start(new_board);

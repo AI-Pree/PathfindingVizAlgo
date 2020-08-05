@@ -4,12 +4,22 @@ import Board from '../models/board.js';
 
 
 //obstacles dict
-var obstacles = {
+const obstacles = {
     "wall":"wall",
     "start":"start",
     "destination":"destination",
     "weight":"weight",
     "checkpoint":"checkpoint",
+}
+
+//clear dict
+const clear_items = {
+    "wall":"wall",
+    "start":"start",
+    "destination":"destination",
+    "weight":"weight",
+    "checkpoint":"checkpoint",
+    "all":"",
 }
 /**
  * @function draw
@@ -80,13 +90,13 @@ export const add = {
                     });
                     cell.addEventListener("mousedown", (event) => {
                         // cannot add more than one start point and cell that has already got obstables
-                        if (start_point === "" ) {
+                        if (board.start === "" ) {
                             start_point = event.target.id;
                             board.start = start_point;
                             cell.setAttribute("class","start")
                             console.log("start point has been added: ", event.target.id);
                             //user is unable to click the button after the start point has been added
-                            if(start_point !== ""){                                
+                            if(board.start !== ""){                                
                                 start_el.setAttribute("class","dropdown-item disabled")
                             }
                         }
@@ -124,13 +134,13 @@ export const add = {
                     });
                     cell.addEventListener("mousedown", (event) => {
                         // cannot add more than one destination point
-                        if (destinaiton_point === "") {
+                        if (board.destination === "") {
                             destinaiton_point = event.target.id;
                             board.destination = destinaiton_point;
                             cell.setAttribute("class","destination")
                             console.log("destination point has been added: ", event.target.id);
                             //user is unable to click the button after the destination point has been added
-                            if(destinaiton_point !== ""){                                
+                            if(board.destination !== ""){                                
                                 destination_el.setAttribute("class","dropdown-item disabled")
                             }
                         }
@@ -168,7 +178,7 @@ export const add = {
                     });
                     cell.addEventListener("mousedown", (event) => {
                         // cannot add more than one weight point for now
-                        if (Object.keys(weight_points).length == 0) {
+                        if (Object.keys(board.weights).length == 0) {
                             weight_point = board.getNodes(event.target.id);
                             weight_points[event.target.id] = weight_point;
                             board.weights[event.target.id] = weight_point;
@@ -222,7 +232,7 @@ export const add = {
                     });
                     cell.addEventListener("mousedown", (event) => {
                         // cannot add more than one checkpoint point for now
-                        if (Object.keys(checkpoint_points).length == 0) {
+                        if (Object.keys(board.checkpoints).length == 0) {
                             checkpoint_point = board.getNodes(event.target.id);
                             checkpoint_points[event.target.id] = checkpoint_point;
                             board.checkpoints[event.target.id] = checkpoint_point;
@@ -231,7 +241,7 @@ export const add = {
                             //user is unable to click the button after the checkpoint point has been added
                             if(Object.keys(checkpoint_points).length > 0){                                
                                 checkpoint_el.setAttribute("class","dropdown-item disabled")
-                            }
+                            }                            
                         }
                         else {
                             console.log("checkpoint point cannnot be added")
@@ -241,18 +251,6 @@ export const add = {
                         is_adding_checkpoint = false;
                     });
                 });
-
-
-
-                // console.log("this function adds checkpoint in the cell")
-
-                // let node_address = "2:3";
-                // //trigger a new event after clicked on the add checkpoint button
-                // /* Add code here */
-
-                // //creates a new checkpoint instance
-                // let new_checkpoint = new Checkpoint(node_address);
-                // console.log(new_checkpoint)
             });
         },
     },
@@ -316,6 +314,78 @@ const clear={
             console.log("clear grid: ", board.grid);
             console.log(board.walls)    
         },
+        /**
+         * @function clear_start
+         * clear the start point in the grid
+         */  
+        clear_start: function(board){
+            //changing the class the cell from walls to unvisited
+            document.querySelectorAll('.start').forEach((cell)=>{
+                cell.setAttribute("class", "unvisited");
+            })
+            //changing the status of the node back to unvisited in the board object 
+            board.getNodes(board.start).status = "unvisited";
+            console.log("start", board.start);
+            //emptying the start field in board
+            board.start = "";
+            document.getElementById("add_start").setAttribute("class","dropdown-item")
+            console.log("clear grid: ", board.grid);
+            console.log(board.start)    
+        },
+        /**
+         * @function clear_destination
+         * clear all the walls in the grid
+         */  
+        clear_destination: function(board){
+            //changing the class the cell from walls to unvisited
+            document.querySelectorAll('.wall').forEach((cell) => {
+                cell.setAttribute("class", "unvisited");
+            });
+            //changing the status of the node back to unvisited in the board object        
+            board.walls.forEach((cell) => {
+                cell.status = "unvisited";
+            })
+            //clearing all the walls
+            board.walls = [];
+            console.log("clear grid: ", board.grid);
+            console.log(board.walls)    
+        },
+        /**
+         * @function clear_walls
+         * clear all the walls in the grid
+         */  
+        clear_weights: function(board){
+            //changing the class the cell from walls to unvisited
+            document.querySelectorAll('.wall').forEach((cell) => {
+                cell.setAttribute("class", "unvisited");
+            });
+            //changing the status of the node back to unvisited in the board object        
+            board.walls.forEach((cell) => {
+                cell.status = "unvisited";
+            })
+            //clearing all the walls
+            board.walls = [];
+            console.log("clear grid: ", board.grid);
+            console.log(board.walls)    
+        },
+        /**
+         * @function clear_checkpoints
+         * clear all the walls in the grid
+         */  
+        clear_checkpoints: function(board){
+            //changing the class the cell from walls to unvisited
+            document.querySelectorAll('.wall').forEach((cell) => {
+                cell.setAttribute("class", "unvisited");
+            });
+            //changing the status of the node back to unvisited in the board object        
+            board.walls.forEach((cell) => {
+                cell.status = "unvisited";
+            })
+            //clearing all the walls
+            board.walls = [];
+            console.log("clear grid: ", board.grid);
+            console.log(board.walls)    
+        },
 
     }     
 }
@@ -334,7 +404,43 @@ export const clear_el = {
             document.getElementById("clear_walls").addEventListener("click",()=>{
                 clear.options.clear_walls(board);
             });      
-        },    
+        },
+        /**
+         * @function clear_start
+         * clear the start point in the grid when clicked on start button
+         */  
+        clear_start: function(board){
+            document.getElementById("clear_start").addEventListener("click",()=>{
+                clear.options.clear_start(board);
+            });      
+        },
+        /**
+         * @function clear_destination
+         * clear the start point in the grid when clicked on start button
+         */  
+        clear_start: function(board){
+            document.getElementById("clear_start").addEventListener("click",()=>{
+                clear.options.clear_start(board);
+            });      
+        },
+        /**
+         * @function clear_weights
+         * clear the start point in the grid when clicked on start button
+         */  
+        clear_weights: function(board){
+            document.getElementById("clear_start").addEventListener("click",()=>{
+                clear.options.clear_start(board);
+            });      
+        },
+        /**
+         * @function clear_checkpoints
+         * clear the start point in the grid when clicked on start button
+         */  
+        clear_checkpoints: function(board){
+            document.getElementById("clear_start").addEventListener("click",()=>{
+                clear.options.clear_start(board);
+            });      
+        },
         /**
          * @function clear_all
          * clear all the added element in the grid when clicked on all button
