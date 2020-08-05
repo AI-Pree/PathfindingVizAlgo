@@ -1,5 +1,5 @@
 import Board from './models/board.js';
-import {drawWall, run, add, stop, clear_el,algorithm} from './controllers/eventController.js';
+import {drawWall, run, add, stop, clear_el,algorithm} from './controllers/navController.js';
 
 // height of the nav in the browser
 let nav_height = document.getElementById("nav_html").clientHeight + 30; // value of 5 can be desirable depending on the bottom offset
@@ -31,8 +31,7 @@ var initialise = function(){
     console.log(new_board.getNodes("0:1"));
     console.log(new_board.getNeighbours("0:2"));    
     console.log("run: ",new_board.run);
-    console.log("stop: ",new_board.stop);       
-    drawWall(new_board);
+    console.log("stop: ",new_board.stop); 
     run(new_board);
     stop(new_board);
     clear_el(new_board);
@@ -41,6 +40,7 @@ var initialise = function(){
     add.options.destination(new_board);
     add.options.weight(new_board);
     add.options.checkpoint(new_board);
+    drawWall(new_board);
 }
 console.log("rows: " + height, "columns: " + width);
 console.log("Creating a new board......");

@@ -73,43 +73,35 @@ export const add = {
          * Add start point in the grid
          */
         start:function(board){
-            const start_el = document.getElementById("add_start")
-            let is_adding_start = false;
+            const start_el = document.getElementById("add_start")            
             let start_point = "";
+            let is_adding_start = true;
                          
-            start_el.addEventListener("click", () => {
-                is_adding_start = true;
-                document.querySelectorAll(".unvisited").forEach((cell) => {
-                    cell.addEventListener("mousemove", (event) => {
-                        let visited = "";
-                        if (is_adding_start && visited != event.target.className) {
-                            visited = event.target.className;
-                            console.log("hovering around cell: ", event.target.id)
-                        }
-                    });
-                    cell.addEventListener("mousedown", (event) => {
+            start_el.addEventListener("click", () => {                
+                let unvisited_el = document.querySelectorAll(".unvisited")
+                unvisited_el.forEach((cell) => {                    
+                    
+                    const start_down = function (event) {
                         // cannot add more than one start point and cell that has already got obstables
-                        if (board.start === "" ) {
+                        if (board.start === "") {
                             start_point = event.target.id;
                             board.start = start_point;
-                            cell.setAttribute("class","start")
+                            cell.setAttribute("class", "start")
                             console.log("start point has been added: ", event.target.id);
                             //user is unable to click the button after the start point has been added
-                            if(board.start !== ""){                                
-                                start_el.setAttribute("class","dropdown-item disabled")
+                            if (board.start !== "") {
+                                start_el.setAttribute("class", "dropdown-item disabled")
                             }
                         }
                         else {
                             console.log("start point cannnot be added")
-                        }
-                    });
-                    cell.addEventListener("mouseup", () => {
-                        is_adding_start = false;
 
-                        // need to remove event listener here
-                    });                    
-                });                
+                        }
+                    };
+                    cell.addEventListener("click", start_down, false);                              
+                });              
             });
+                         
         },
         /**
          * @function destination
@@ -120,18 +112,10 @@ export const add = {
             let is_adding_destination = false;
             let destinaiton_point = "";
 
-            destination_el.addEventListener("click", ()=>{                
+            destination_el.addEventListener("click", function destinationClick(){                
                 is_adding_destination = true;
-                document.querySelectorAll(".unvisited").forEach((cell) => {
-                    cell.addEventListener("mousemove", (event) => {
-                        let visited = "";
-                        if (is_adding_destination) {
-                            visited = event.target.className;
-                            if(visited != event.target.className)
-                                console.log("hovering around cell: ", event.target.id)
-                        }
-                    });
-                    cell.addEventListener("mousedown", (event) => {
+                document.querySelectorAll(".unvisited").forEach((cell) => {                    
+                    cell.addEventListener("click", (event) => {
                         // cannot add more than one destination point
                         if (board.destination === "") {
                             destinaiton_point = event.target.id;
@@ -146,10 +130,7 @@ export const add = {
                         else {
                             console.log("destination point cannnot be added")
                         }
-                    });
-                    cell.addEventListener("mouseup", () => {
-                        is_adding_destination = false;
-                    });
+                    });                    
                 });                
             })
         },
@@ -195,13 +176,7 @@ export const add = {
                     cell.addEventListener("mouseup", () => {
                         is_adding_weight = false;
                     });
-                });       
-                // console.log("this function adds weight in the cell")
-                // //creates a new weight instance
-                // let cost_of_weight = 5;
-                // let node_address = "2:3";
-                // let new_weight = new Weight(cost_of_weight, node_address);
-                // console.log(new_weight);
+                });
 
                 //trigger a new event after clicked on the add weight button
                 /* Add code here */
@@ -347,16 +322,15 @@ const clear={
 
             //changing the status of the node back to unvisited in the board object 
             board.getNodes(board.destination).status = "unvisited";
-            console.log("start", board.destination);
+            console.log("destination", board.destination);
 
             //clearing the destination
             board.destination = "";
 
             //make add start point button clickable
             document.getElementById("add_destination").setAttribute("class","dropdown-item");
-
             console.log("clear grid: ", board.grid);
-            console.log(board.walls)    
+            console.log(board.destination);    
         },
         /**
          * @function clear_weights
