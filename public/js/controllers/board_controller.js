@@ -3,6 +3,7 @@
  * This controller handles all the event for the board in the views
  */
 
+ import items_transition from "./animation_controller.js"
 
 //obstacles dict
 const obstacles = {
@@ -91,22 +92,20 @@ export function draw(board){
             }                
         });
         cell.addEventListener("mouseout", (event) =>{            
-            cell.style.backgroundColor = "";
-            cell.style.opacity = 1;
+            items_transition(cell, {});
         });
 
         //when user clicked the mouse
         cell.addEventListener("mousedown", (event) => {     
             //adding pressed nodes
             cell_pressed = board.getNodes(event.target.id);
-            board.pressedCell[event.target.id] = board.getNodes(event.target.id);
+            board.pressedCell[event.target.id] = cell_pressed;
 
             //when visited the same wall node it doesnt need to set class as wall  
             if(!obstacles[event.target.className] && !(mode["is_adding_start"]['0'] || mode["is_adding_destination"]['0'] || mode["is_adding_weight"]['0'] || mode["is_adding_checkpoint"]['0'])){   
-                console.log("cell-address: ", event.target.id);             
-                let wall_node = board.getNodes(event.target.id);
-                wall_node.status = "wall";
-                board.walls.push(wall_node);
+                console.log("cell-address: ", event.target.id);
+                cell_pressed.status = "wall";
+                board.walls.push(cell_pressed);
                 cell.setAttribute("class", "wall");
                 //changing the cell color to black
                 cell.style.transition = "2s";
@@ -120,6 +119,7 @@ export function draw(board){
                 if (board.start === "" && !obstacles[event.target.className]) {
                     let start_point = event.target.id;
                     board.start = start_point;
+                    cell_pressed.status = "start";
                     cell_pressed.pressedMode = "moveable";
                     cell.setAttribute("class", "start")
                     console.log("start point has been added: ", event.target.id);
@@ -128,8 +128,7 @@ export function draw(board){
                         start_el.setAttribute("class", "dropdown-item disabled")
                     }
                     //changing the cell color to green
-                    cell.style.backgroundColor = "green";
-                    cell.style.opacity = 1;
+                    items_transition(cell, {backgroundColor:"green",transitionDuration:"2s"});
                 }
                 else {
                     console.log("start point cannnot be added")
@@ -142,6 +141,7 @@ export function draw(board){
                 if (board.destination === "" && !obstacles[event.target.className]) {
                     let destinaiton_point = event.target.id;
                     cell_pressed.pressedMode = "moveable";
+                    cell_pressed.status = "destination";
                     board.destination = destinaiton_point;
                     cell.setAttribute("class", "destination")
                     console.log("destination point has been added: ", event.target.id);
@@ -150,8 +150,7 @@ export function draw(board){
                         destination_el.setAttribute("class", "dropdown-item disabled")
                     }
                     //changing the cell color to red
-                    cell.style.backgroundColor = "red";
-                    cell.style.opacity = 1;
+                    items_transition(cell, {backgroundColor:"red",transitionDuration:"2s"});
                 }
                 else {
                     console.log("destination point cannnot be added")
@@ -161,15 +160,15 @@ export function draw(board){
             //adding weights in the board
             if (mode["is_adding_weight"]['0']){
                 if(!obstacles[event.target.className]){
-                    let weight_point = board.getNodes(event.target.id);
-                    weight_points[event.target.id] = weight_point;
-                    board.weights[event.target.id] = weight_point;
+                    cell_pressed.weight += 10;
+                    cell_pressed.status = "weight";
+                    weight_points[event.target.id] = cell_pressed;
+                    board.weights[event.target.id] = cell_pressed;
                     cell.setAttribute("class", "weight")
                     console.log("weight point has been added: ", event.target.id);
                     
                     //changing the cell color to orange
-                    cell.style.backgroundColor = "orange";
-                    cell.style.opacity = 1;                  
+                    items_transition(cell, {backgroundColor:"orange",transitionDuration:"2s"});                  
                 }
                 else{
                     console.log("weight point cannnot be added")
@@ -178,16 +177,16 @@ export function draw(board){
 
             //adding checkpoints in the board
             if(mode["is_adding_checkpoint"]['0']){
-                if (!obstacles[event.target.className]) {
-                    let checkpoint_point = board.getNodes(event.target.id);
-                    checkpoint_points[event.target.id] = checkpoint_point;
-                    board.checkpoints[event.target.id] = checkpoint_point;
+                if (!obstacles[event.target.className]) {   
+                    cell_pressed.status = "checkpoint";                
+                    checkpoint_points[event.target.id] = cell_pressed;
+                    board.checkpoints[event.target.id] = cell_pressed;
+                    cell_pressed.pressedMode = "moveable";
                     cell.setAttribute("class", "checkpoint")
                     console.log("checkpoint point has been added: ", event.target.id);
 
                     //changing the cell color to yellow
-                    cell.style.backgroundColor = "yellow";
-                    cell.style.opacity = 1;
+                    items_transition(cell, {backgroundColor:"yellow",transitionDuration:"2s"});
                 }
                 else {
                     console.log("checkpoint point cannnot be added")
@@ -199,6 +198,8 @@ export function draw(board){
 
         //when user is moving the mouse in clicked position
         cell.addEventListener("mousemove", (event) =>{
+            cell_pressed = board.getNodes(event.target.id);
+            board.pressedCell[event.target.id] = cell_pressed;
             //when visited the same wall node it doesnt need to set class as wall  
             if (mode["is_drawing"]['0'] && !obstacles[event.target.className] && !(mode["is_adding_start"]['0'] || mode["is_adding_destination"]['0'] || mode["is_adding_weight"]['0'] || mode["is_adding_checkpoint"]['0'])){
                 console.log("cell-address: ", event.target.id);                
@@ -206,19 +207,27 @@ export function draw(board){
                 board.walls.push(cell_pressed);
                 cell.setAttribute("class", "wall");
                 //css styling for walls
-                cell.style.transition = "2s";
+                items_transition(cell, {backgroundColor:"black",transitionDuration:"2s"});
             }
             
-            //when visited the same weight node it doesnt need tos et class as weight
+            //when visited the same weight node it doesnt need to set status
             if(mode["is_drawing"]['0'] && mode["is_adding_weight"]['0'] && !obstacles[event.target.className]){
                 console.log("weight point has been added: ", event.target.id);
                 cell_pressed.status = "weight";
+                cell_pressed.weight += 10;
+                weight_points[event.target.id] = cell_pressed;
                 board.weights[event.target.id] = cell_pressed;
                 cell.setAttribute("class", "weight")
+                items_transition(cell, {backgroundColor:"orange",transitionDuration:"2s"});
             }
         });
         //when user released the mouse click
-        cell.addEventListener("mouseup", ()=>{            
+        cell.addEventListener("mouseup", ()=>{  
+            console.log("show walls:", board.walls); 
+            console.log("show weights: ", board.weights);
+            console.log("show start: ", board.start);
+            console.log("show destination: ", board.destination);
+            console.log("show checkpoints: ", board.checkpoints);        
             Object.keys(mode).forEach((key) =>{
                 mode[key]['0'] = false;
             })
@@ -347,6 +356,7 @@ const clear={
                 //changing the status of the node back to unvisited in the board object        
                 Object.keys(board.weights).forEach((cell) => {
                     board.weights[cell].status = "unvisited";
+                    board.weights[cell].weight -= 10;
                 })
                 //clearing all the weights
                 board.weights = {};
