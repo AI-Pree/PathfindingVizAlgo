@@ -1,5 +1,6 @@
 /**
- * navController
+ * board controller
+ * This controller handles all the event for the board in the views
  */
 
 
@@ -73,6 +74,7 @@ export function draw(board){
     let weight_points = {}; // all the address of the node that has weights
     let checkpoint_points = {}; // all the address of the node that has checkpoints
 
+    //when user hovers around the cell
     cellHTML.forEach((cell) => {
         cell.addEventListener("mouseover", (event) =>{
             if(!obstacles[event.target.className] && !(mode["is_adding_start"]['0'] || mode["is_adding_destination"]['0'] || mode["is_adding_weight"]['0'] || mode["is_adding_checkpoint"]['0'])){
@@ -106,6 +108,7 @@ export function draw(board){
                 wall_node.status = "wall";
                 board.walls.push(wall_node);
                 cell.setAttribute("class", "wall");
+                //changing the cell color to black
                 cell.style.backgroundColor = "#000";
                 cell.style.opacity = 0.3;  
             }  
@@ -123,6 +126,7 @@ export function draw(board){
                     if (board.start !== "") {
                         start_el.setAttribute("class", "dropdown-item disabled")
                     }
+                    //changing the cell color to green
                     cell.style.backgroundColor = "green";
                     cell.style.opacity = 1;
                 }
@@ -144,6 +148,7 @@ export function draw(board){
                     if (board.destination !== "") {
                         destination_el.setAttribute("class", "dropdown-item disabled")
                     }
+                    //changing the cell color to red
                     cell.style.backgroundColor = "red";
                     cell.style.opacity = 1;
                 }
@@ -159,7 +164,9 @@ export function draw(board){
                     weight_points[event.target.id] = weight_point;
                     board.weights[event.target.id] = weight_point;
                     cell.setAttribute("class", "weight")
-                    console.log("weight point has been added: ", event.target.id);  
+                    console.log("weight point has been added: ", event.target.id);
+                    
+                    //changing the cell color to orange
                     cell.style.backgroundColor = "orange";
                     cell.style.opacity = 1;                  
                 }
@@ -176,6 +183,8 @@ export function draw(board){
                     board.checkpoints[event.target.id] = checkpoint_point;
                     cell.setAttribute("class", "checkpoint")
                     console.log("checkpoint point has been added: ", event.target.id);
+
+                    //changing the cell color to yellow
                     cell.style.backgroundColor = "yellow";
                     cell.style.opacity = 1;
                 }
@@ -373,9 +382,12 @@ const clear={
 export function clear_el(board){
     document.getElementById("clear_items").addEventListener("click",(event)=>{
         let value = event.target.text;
+
+        //ccondition for clearing all the item in the cell
         if(value != "All"){          
             clear.options[clear_items[value]](board);
         }
+        //runs only selected clear options
         else{
             Object.entries(clear.options).forEach(([key,value])=>{
                 value(board);

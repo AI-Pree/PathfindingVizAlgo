@@ -1,5 +1,5 @@
 import Board from './models/board.js';
-import {draw, run, stop, clear_el,algorithm} from './controllers/navController.js';
+import {draw, run, stop, clear_el,algorithm} from './controllers/board_controller.js';
 
 // height of the nav in the browser
 let nav_height = document.getElementById("nav_html").clientHeight + 30; // value of 5 can be desirable depending on the bottom offset
