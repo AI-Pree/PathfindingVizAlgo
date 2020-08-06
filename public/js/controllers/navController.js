@@ -1,6 +1,6 @@
-import Weight from '../models/weight.js';
-import Checkpoint from '../models/checkpoint.js';
-import Board from '../models/board.js';
+/**
+ * navController
+ */
 
 
 //obstacles dict
@@ -33,15 +33,16 @@ const mode = {
 /**
  * @function draw
  * create a wall in the grid
+ * create a start point in the grid
+ * create a end point in the grid
+ * create a weight point in the grid
+ * create a checkpoint point in the grid
  * changes the class name of the cell with unvisited and the status of the node
- * to wall after clicked
- * @param node_id
- * cell address in the table
- * @returns wall_nodes
- * it the address of all the node that has wall as a status
+ * to wall, start, destination, weight and checkpoint after clicked
+ * @param board
+ * new board instance created in main 
  */
 export function draw(board){
-
     let cellHTML = document.querySelectorAll('.unvisited');
     let start_el= document.getElementById("add_start");
     let destination_el= document.getElementById("add_destination");
@@ -68,9 +69,9 @@ export function draw(board){
         mode["is_adding_checkpoint"] = true;            
     });
 
-    let cell_pressed = "";
-    let weight_points = {};
-    let checkpoint_points = {};
+    let cell_pressed = ""; //address of the cell that has been clicked
+    let weight_points = {}; // all the address of the node that has weights
+    let checkpoint_points = {}; // all the address of the node that has checkpoints
 
     cellHTML.forEach((cell) => {
         //when user clicked the mouse
@@ -247,7 +248,7 @@ const clear={
             })
             //clearing all the walls
             board.walls = [];
-            console.log("clear grid: ", board.grid);
+            console.log("clear grid for walls: ", board.grid);
             console.log(board.walls)    
         },
         /**
@@ -255,80 +256,91 @@ const clear={
          * clear the start point in the grid
          */  
         clear_start: function(board){
-            //changing the class the cell from walls to unvisited
-            document.querySelectorAll('.start').forEach((cell)=>{
-                cell.setAttribute("class", "unvisited");
-            });
+            //check if there is any start point added in the board
+            if(board.start !== ""){
+                //changing the class the cell from walls to unvisited
+                document.querySelectorAll('.start').forEach((cell)=>{
+                    cell.setAttribute("class", "unvisited");
+                });
 
-            //changing the status of the node back to unvisited in the board object 
-            board.getNodes(board.start).status = "unvisited";
-            console.log("start", board.start);
+                //changing the status of the node back to unvisited in the board object 
+                board.getNodes(board.start).status = "unvisited";
+                console.log("start", board.start);
 
-            //emptying the start field in board
-            board.start = "";
+                //emptying the start field in board
+                board.start = "";
 
-            //make add start point button clickable
-            document.getElementById("add_start").setAttribute("class","dropdown-item");
-            console.log("clear grid: ", board.grid);
-            console.log(board.start);
+                //make add start point button clickable
+                document.getElementById("add_start").setAttribute("class","dropdown-item");
+                console.log("clear grid for start: ", board.grid);
+                console.log(board.start);
+            }            
         },
         /**
          * @function clear_destination
          * clear all the walls in the grid
          */  
         clear_destination: function(board){
-            //changing the class the cell from walls to unvisited
-            document.querySelectorAll('.destination').forEach((cell) => {
-                cell.setAttribute("class", "unvisited");
-            });
+            if(board.destination != ""){
+                //changing the class the cell from walls to unvisited
+                document.querySelectorAll('.destination').forEach((cell) => {
+                    cell.setAttribute("class", "unvisited");
+                });
 
-            //changing the status of the node back to unvisited in the board object 
-            board.getNodes(board.destination).status = "unvisited";
-            console.log("destination", board.destination);
+                //changing the status of the node back to unvisited in the board object 
+                board.getNodes(board.destination).status = "unvisited";
+                console.log("destination", board.destination);
 
-            //clearing the destination
-            board.destination = "";
+                //clearing the destination
+                board.destination = "";
 
-            //make add start point button clickable
-            document.getElementById("add_destination").setAttribute("class","dropdown-item");
-            console.log("clear grid: ", board.grid);
-            console.log(board.destination);    
+                //make add start point button clickable
+                document.getElementById("add_destination").setAttribute("class","dropdown-item");
+                console.log("clear grid for destination: ", board.grid);
+                console.log(board.destination);
+            }                
         },
         /**
          * @function clear_weights
-         * clear all the walls in the grid
+         * clear all the weights in the grid
          */  
         clear_weights: function(board){
-            //changing the class the cell from walls to unvisited
-            document.querySelectorAll('.wall').forEach((cell) => {
-                cell.setAttribute("class", "unvisited");
-            });
-            //changing the status of the node back to unvisited in the board object        
-            board.walls.forEach((cell) => {
-                cell.status = "unvisited";
-            })
-            //clearing all the walls
-            board.walls = [];
-            console.log("clear grid: ", board.grid);
-            console.log(board.walls)    
+            //clear weights only if there is any in the board
+            if(Object.keys(board.weights).length > 0){
+                //changing the class the cell from weight to unvisited
+                document.querySelectorAll('.weight').forEach((cell) => {
+                    cell.setAttribute("class", "unvisited");
+                });
+                //changing the status of the node back to unvisited in the board object        
+                Object.keys(board.weights).forEach((cell) => {
+                    board.weights[cell].status = "unvisited";
+                })
+                //clearing all the weights
+                board.weights = {};
+                console.log("clear grid for weights: ", board.grid);
+                console.log(board.weights);
+            }                
         },
         /**
          * @function clear_checkpoints
-         * clear all the walls in the grid
+         * clear all the checkpoints in the grid
          */  
         clear_checkpoints: function(board){
-            //changing the class the cell from walls to unvisited
-            document.querySelectorAll('.wall').forEach((cell) => {
-                cell.setAttribute("class", "unvisited");
-            });
-            //changing the status of the node back to unvisited in the board object        
-            board.walls.forEach((cell) => {
-                cell.status = "unvisited";
-            })
-            //clearing all the walls
-            board.walls = [];
-            console.log("clear grid: ", board.grid);
-            console.log(board.walls)    
+            //clear only when there is checkpoints in the board
+            if(Object.keys(board.checkpoints).length > 0){
+                //changing the class the cell from checkpoints to unvisited
+                document.querySelectorAll('.checkpoint').forEach((cell) => {
+                    cell.setAttribute("class", "unvisited");
+                });
+                //changing the status of the node back to unvisited in the board object        
+                Object.keys(board.checkpoints).forEach((cell) => {
+                    board.checkpoints[cell].status = "unvisited";
+                })
+                //clearing all the walls
+                board.checkpoints = {};
+                console.log("clear grid for checkpoints: ", board.grid);
+                console.log(board.checkpoints);
+            }              
         },
     }     
 }
