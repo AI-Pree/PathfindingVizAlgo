@@ -109,6 +109,7 @@ export function draw(board){
                 board.walls.push(wall_node);
                 cell.setAttribute("class", "wall");
                 //changing the cell color to black
+                cell.style.transition = "2s";
                 cell.style.backgroundColor = "#000";
                 cell.style.opacity = 0.3;  
             }  
@@ -204,6 +205,8 @@ export function draw(board){
                 cell_pressed.status = "wall";
                 board.walls.push(cell_pressed);
                 cell.setAttribute("class", "wall");
+                //css styling for walls
+                cell.style.transition = "2s";
             }
             
             //when visited the same weight node it doesnt need tos et class as weight
