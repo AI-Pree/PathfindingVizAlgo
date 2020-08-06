@@ -45,11 +45,14 @@ const mode = {
  * new board instance created in main 
  */
 export function draw(board){
-    let cellHTML = document.querySelectorAll('.unvisited');
-    let start_el= document.getElementById("add_start");
-    let destination_el= document.getElementById("add_destination");
-    let weight_el= document.getElementById("add_weight");
-    let checkpoint_el= document.getElementById("add_checkpoint");
+    let cellHTML = document.querySelectorAll('.unvisited'); // DOM elements of the element that has classs unviisted
+    let start_el= document.getElementById("add_start"); // DOM element of the start button
+    let destination_el= document.getElementById("add_destination"); // DOM element of the destination button
+    let weight_el= document.getElementById("add_weight"); // DOM element of the weight button
+    let checkpoint_el= document.getElementById("add_checkpoint"); // DOM element of the checkpoint button
+    let cell_pressed = ""; // address of the cell that has been clicked
+    let weight_points = {}; // all the address of the node that has weights
+    let checkpoint_points = {}; // all the address of the node that has checkpoints
 
     //when user clicks the add_start button
     start_el.addEventListener("click", () => {
@@ -70,10 +73,6 @@ export function draw(board){
     checkpoint_el.addEventListener("click", () => {
         mode["is_adding_checkpoint"]['0'] = true;            
     });
-
-    let cell_pressed = ""; //address of the cell that has been clicked
-    let weight_points = {}; // all the address of the node that has weights
-    let checkpoint_points = {}; // all the address of the node that has checkpoints
 
     //when user hovers around the cell
     cellHTML.forEach((cell) => {
