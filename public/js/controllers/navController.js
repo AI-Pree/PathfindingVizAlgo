@@ -20,6 +20,16 @@ const clear_items = {
     "Weight":"clear_weights",
     "Checkpoint":"clear_checkpoints",
 }
+
+//mode at which board is running
+const mode = {
+    is_drawing:false,  //check if the user still in drawing mode
+    is_adding_start:false,
+    is_adding_weight:false,
+    is_adding_checkpoint:false,
+    is_adding_destination:false,
+}
+
 /**
  * @function draw
  * create a wall in the grid
@@ -30,204 +40,156 @@ const clear_items = {
  * @returns wall_nodes
  * it the address of all the node that has wall as a status
  */
-export function drawWall(board){    
-    let is_drawing = false; //check if the user still in drawing mode
-    document.querySelectorAll('.unvisited').forEach((cell)=>{
+export function draw(board){
+
+    let cellHTML = document.querySelectorAll('.unvisited');
+    let start_el= document.getElementById("add_start");
+    let destination_el= document.getElementById("add_destination");
+    let weight_el= document.getElementById("add_weight");
+    let checkpoint_el= document.getElementById("add_checkpoint");
+
+    //when user clicks the add_start button
+    start_el.addEventListener("click", () => {
+        mode["is_adding_start"] = true;              
+    });
+
+    //when user clicks the add_destination button
+    destination_el.addEventListener("click", () => {
+        mode["is_adding_destination"] = true;            
+    });
+
+    //when user clicks the add_weights button
+    weight_el.addEventListener("click", () => {
+        mode["is_adding_weight"] = true;            
+    });
+
+    //when user clicks the add_checkpoints button
+    checkpoint_el.addEventListener("click", () => {
+        mode["is_adding_checkpoint"] = true;            
+    });
+
+    let cell_pressed = "";
+    let weight_points = {};
+    let checkpoint_points = {};
+
+    cellHTML.forEach((cell) => {
         //when user clicked the mouse
-        cell.addEventListener("mousedown", (event) => {
+        cell.addEventListener("mousedown", (event) => {     
+            //adding pressed nodes
+            cell_pressed = board.getNodes(event.target.id);
+            board.pressedCell[event.target.id] = board.getNodes(event.target.id);
+
             //when visited the same wall node it doesnt need to set class as wall  
-            if(!obstacles[event.target.className]){
-                console.log("cell-address: ", event.target.id);
+            if(!obstacles[event.target.className] && !(mode["is_adding_start"] || mode["is_adding_destination"] || mode["is_adding_weight"] || mode["is_adding_checkpoint"])){   
+                console.log("cell-address: ", event.target.id);             
                 let wall_node = board.getNodes(event.target.id);
                 wall_node.status = "wall";
                 board.walls.push(wall_node);
-                cell.setAttribute("class", "wall");
+                cell.setAttribute("class", "wall");   
             }  
-            is_drawing = true;
+
+            // adding start point in the board
+            if(mode["is_adding_start"]){                
+                // cannot add more than one start point and cell that has already got obstables
+                if (board.start === "" && !obstacles[event.target.className]) {
+                    let start_point = event.target.id;
+                    board.start = start_point;
+                    cell_pressed.pressedMode = "moveable";
+                    cell.setAttribute("class", "start")
+                    console.log("start point has been added: ", event.target.id);
+                    //user is unable to click the button after the start point has been added
+                    if (board.start !== "") {
+                        start_el.setAttribute("class", "dropdown-item disabled")
+                    }
+                }
+                else {
+                    console.log("start point cannnot be added")
+                }
+            }
+
+            //adding destination in the board
+            if(mode["is_adding_destination"]){                              
+                // cannot add more than one destination point
+                if (board.destination === "" && !obstacles[event.target.className]) {
+                    let destinaiton_point = event.target.id;
+                    cell_pressed.pressedMode = "moveable";
+                    board.destination = destinaiton_point;
+                    cell.setAttribute("class", "destination")
+                    console.log("destination point has been added: ", event.target.id);
+                    //user is unable to click the button after the destination point has been added
+                    if (board.destination !== "") {
+                        destination_el.setAttribute("class", "dropdown-item disabled")
+                    }
+                }
+                else {
+                    console.log("destination point cannnot be added")
+                }
+            }
+            
+            //adding weights in the board
+            if (mode["is_adding_weight"]){
+                if(!obstacles[event.target.className]){
+                    let weight_point = board.getNodes(event.target.id);
+                    weight_points[event.target.id] = weight_point;
+                    board.weights[event.target.id] = weight_point;
+                    cell.setAttribute("class", "weight")
+                    console.log("weight point has been added: ", event.target.id);                    
+                }
+                else{
+                    console.log("weight point cannnot be added")
+                }                
+            }
+
+            //adding checkpoints in the board
+            if(mode["is_adding_checkpoint"]){
+                if (!obstacles[event.target.className]) {
+                    let checkpoint_point = board.getNodes(event.target.id);
+                    checkpoint_points[event.target.id] = checkpoint_point;
+                    board.checkpoints[event.target.id] = checkpoint_point;
+                    cell.setAttribute("class", "checkpoint")
+                    console.log("checkpoint point has been added: ", event.target.id);
+                }
+                else {
+                    console.log("checkpoint point cannnot be added")
+                }
+            }
+
+            mode["is_drawing"] = true;
         });
+
         //when user is moving the mouse in clicked position
         cell.addEventListener("mousemove", (event) =>{
             //when visited the same wall node it doesnt need to set class as wall  
-            if (is_drawing && !obstacles[event.target.className]){
-                console.log("cell-address: ", event.target.id);
-                let wall_node = board.getNodes(event.target.id);
-                wall_node.status = "wall";
-                board.walls.push(wall_node);
+            if (mode["is_drawing"] && !obstacles[event.target.className] && !(mode["is_adding_start"] || mode["is_adding_destination"] || mode["is_adding_weight"] || mode["is_adding_checkpoint"])){
+                console.log("cell-address: ", event.target.id);                
+                cell_pressed.status = "wall";
+                board.walls.push(cell_pressed);
                 cell.setAttribute("class", "wall");
+            }
+            
+            //when visited the same weight node it doesnt need tos et class as weight
+            if(mode["is_drawing"] && mode["is_adding_weight"] && !obstacles[event.target.className]){
+                console.log("weight point has been added: ", event.target.id);
+                cell_pressed.status = "weight";
+                board.weights[event.target.id] = cell_pressed;
+                cell.setAttribute("class", "weight")
+            }
+
+            //when visited the same weight node it doesnt need tos et class as weight
+            if(mode["is_drawing"] && mode["is_adding_checkpoint"] && !obstacles[event.target.className]){
+                console.log("checkpoint point has been added: ", event.target.id);
+                cell_pressed.status = "checkpoint";
+                board.checkpoints[event.target.id] = cell_pressed;
+                cell.setAttribute("class", "checkpoint")
             }
         });
         //when user released the mouse click
-        cell.addEventListener("mouseup", ()=>{
-            is_drawing = false;
+        cell.addEventListener("mouseup", ()=>{            
+            Object.keys(mode).forEach((key) =>{
+                mode[key] = false;
+            })
         });
     });
-};
-
-/**
- * @function add
- * lets the user add the weights and checkpoints in the grid
- */
-export const add = {
-    options: {
-        /**@function start
-         * Add start point in the grid
-         */
-        start:function(board){
-            const start_el = document.getElementById("add_start")            
-            let start_point = "";
-            let is_adding_start = true;
-                         
-            start_el.addEventListener("click", () => {                
-                let unvisited_el = document.querySelectorAll(".unvisited")
-                unvisited_el.forEach((cell) => {                    
-                    
-                    const start_down = function (event) {
-                        // cannot add more than one start point and cell that has already got obstables
-                        if (board.start === "") {
-                            start_point = event.target.id;
-                            board.start = start_point;
-                            cell.setAttribute("class", "start")
-                            console.log("start point has been added: ", event.target.id);
-                            //user is unable to click the button after the start point has been added
-                            if (board.start !== "") {
-                                start_el.setAttribute("class", "dropdown-item disabled")
-                            }
-                        }
-                        else {
-                            console.log("start point cannnot be added")
-
-                        }
-                    };
-                    cell.addEventListener("click", start_down, false);                              
-                });              
-            });
-                         
-        },
-        /**
-         * @function destination
-         * Add destination point in the grid
-         */
-        destination:function(board){
-            const destination_el = document.getElementById("add_destination")
-            let is_adding_destination = false;
-            let destinaiton_point = "";
-
-            destination_el.addEventListener("click", function destinationClick(){                
-                is_adding_destination = true;
-                document.querySelectorAll(".unvisited").forEach((cell) => {                    
-                    cell.addEventListener("click", (event) => {
-                        // cannot add more than one destination point
-                        if (board.destination === "") {
-                            destinaiton_point = event.target.id;
-                            board.destination = destinaiton_point;
-                            cell.setAttribute("class","destination")
-                            console.log("destination point has been added: ", event.target.id);
-                            //user is unable to click the button after the destination point has been added
-                            if(board.destination !== ""){                                
-                                destination_el.setAttribute("class","dropdown-item disabled")
-                            }
-                        }
-                        else {
-                            console.log("destination point cannnot be added")
-                        }
-                    });                    
-                });                
-            })
-        },
-        /**
-         * @function weight
-         * Add weight to the node selected by the user in real-time
-         * creates a box where you can add the weights based on their priority level
-         */
-        weight:function(board){
-            const weight_el = document.getElementById("add_weight");
-            let is_adding_weight = false;
-            let weight_points = {};
-            let weight_point = ""; // stores object Node
-
-            weight_el.addEventListener("click", () => {
-                is_adding_weight = true;
-                document.querySelectorAll(".unvisited").forEach((cell) => {
-                    cell.addEventListener("mousemove", (event) => {
-                        let visited = "";
-                        if (is_adding_weight) {
-                            visited = event.target.className;
-                            if(visited != event.target.className)
-                                console.log("hovering around cell: ", event.target.id)
-                        }
-                    });
-                    cell.addEventListener("mousedown", (event) => {
-                        // cannot add more than one weight point for now
-                        if (Object.keys(board.weights).length == 0) {
-                            weight_point = board.getNodes(event.target.id);
-                            weight_points[event.target.id] = weight_point;
-                            board.weights[event.target.id] = weight_point;
-                            cell.setAttribute("class","weight")
-                            console.log("weight point has been added: ", event.target.id);
-                            //user is unable to click the button after the destination point has been added
-                            if(Object.keys(weight_points).length > 0){                                
-                                weight_el.setAttribute("class","dropdown-item disabled")
-                            }
-                        }
-                        else {
-                            console.log("weight point cannnot be added")
-                        }
-                    });
-                    cell.addEventListener("mouseup", () => {
-                        is_adding_weight = false;
-                    });
-                });
-
-                //trigger a new event after clicked on the add weight button
-                /* Add code here */
-            });
-        },
-        /**
-         * @function checkpoint
-         * Add checkpoint to the node selected by the user in real-time
-         * creates a window box where you can add the checkpoints based on their priority level
-         */
-        checkpoint:function(board){
-            const checkpoint_el = document.getElementById("add_checkpoint");
-            let is_adding_checkpoint = false;
-            let checkpoint_points = {};
-            let checkpoint_point = ""; // stores object Node
-
-            checkpoint_el.addEventListener("click", () => {
-                is_adding_checkpoint = true;
-                document.querySelectorAll(".unvisited").forEach((cell) => {
-                    cell.addEventListener("mousemove", (event) => {
-                        let visited = "";
-                        if (is_adding_checkpoint) {
-                            visited = event.target.className;
-                            if(visited != event.target.className)
-                                console.log("hovering around cell: ", event.target.id);
-                        }
-                    });
-                    cell.addEventListener("mousedown", (event) => {
-                        // cannot add more than one checkpoint point for now
-                        if (Object.keys(board.checkpoints).length == 0) {
-                            checkpoint_point = board.getNodes(event.target.id);
-                            checkpoint_points[event.target.id] = checkpoint_point;
-                            board.checkpoints[event.target.id] = checkpoint_point;
-                            cell.setAttribute("class","checkpoint")
-                            console.log("checkpoint point has been added: ", event.target.id);
-                            //user is unable to click the button after the checkpoint point has been added
-                            if(Object.keys(checkpoint_points).length > 0){                                
-                                checkpoint_el.setAttribute("class","dropdown-item disabled")
-                            }                            
-                        }
-                        else {
-                            console.log("checkpoint point cannnot be added")
-                        }
-                    });
-                    cell.addEventListener("mouseup", () => {
-                        is_adding_checkpoint = false;
-                    });
-                });
-            });
-        },
-    },
 };
 
 /**

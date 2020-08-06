@@ -28,6 +28,9 @@ export default class Board{
         this.walls = [];
         this.weights = {};
         this.checkpoints = {};
+        
+        // board activities
+        this.pressedCell = {};
     }   
 
     /**
