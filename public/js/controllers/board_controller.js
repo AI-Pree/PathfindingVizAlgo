@@ -5,6 +5,7 @@
 
 //imports 
 import Visualiser from '../controllers/visualiser_controller.js';
+import {frontier} from "../controllers/frontier_controller.js";
 
 //visualiser object for animation
 let visualiser = new Visualiser();
@@ -248,6 +249,7 @@ export function run(board){
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
         console.log("running....");
+        frontier(board);
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
         console.log("The wall node is:", board.walls)
