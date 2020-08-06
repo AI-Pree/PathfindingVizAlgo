@@ -3,7 +3,11 @@
  * This controller handles all the event for the board in the views
  */
 
- import items_transition from "./animation_controller.js"
+//imports 
+import Visualiser from '../controllers/visualiser_controller.js';
+
+//visualiser object for animation
+let visualiser = new Visualiser();
 
 //obstacles dict
 const obstacles = {
@@ -84,14 +88,13 @@ export function draw(board){
             if(!obstacles[event.target.className]){
                 Object.entries(mode).forEach(([key,value])=>{
                     if(value['0'] && key != "is_drawing"){
-                        cell.style.backgroundColor = value['1'];
-                        cell.style.opacity = 0.3;
+                        visualiser.items_transition(cell,{backgroundColor:value['1'],transitionDuration:"2s",opacity:0.3}); // colors of the added node types
                     }                
                 });
             }                
         });
         cell.addEventListener("mouseout", (event) =>{            
-            items_transition(cell, {});
+            visualiser.items_transition(cell, {});
         });
 
         //when user clicked the mouse
@@ -107,9 +110,7 @@ export function draw(board){
                 board.walls.push(cell_pressed);
                 cell.setAttribute("class", "wall");
                 //changing the cell color to black
-                cell.style.transition = "2s";
-                cell.style.backgroundColor = "#000";
-                cell.style.opacity = 0.3;  
+                visualiser.items_transition(cell,{backgroundColor:"#000",transitionDuration:"2s",opacity:0.3});                  
             }  
 
             // adding start point in the board
@@ -127,7 +128,7 @@ export function draw(board){
                         start_el.setAttribute("class", "dropdown-item disabled")
                     }
                     //changing the cell color to green
-                    items_transition(cell, {backgroundColor:"green",transitionDuration:"2s"});
+                    visualiser.items_transition(cell, {backgroundColor:"green",transitionDuration:"2s"});
                 }
                 else {
                     console.log("start point cannnot be added")
@@ -149,7 +150,7 @@ export function draw(board){
                         destination_el.setAttribute("class", "dropdown-item disabled")
                     }
                     //changing the cell color to red
-                    items_transition(cell, {backgroundColor:"red",transitionDuration:"2s"});
+                    visualiser.items_transition(cell, {backgroundColor:"red",transitionDuration:"2s"});
                 }
                 else {
                     console.log("destination point cannnot be added")
@@ -167,7 +168,7 @@ export function draw(board){
                     console.log("weight point has been added: ", event.target.id);
                     
                     //changing the cell color to orange
-                    items_transition(cell, {backgroundColor:"orange",transitionDuration:"2s"});                  
+                    visualiser.items_transition(cell, {backgroundColor:"orange",transitionDuration:"2s"});                  
                 }
                 else{
                     console.log("weight point cannnot be added")
@@ -185,7 +186,7 @@ export function draw(board){
                     console.log("checkpoint point has been added: ", event.target.id);
 
                     //changing the cell color to yellow
-                    items_transition(cell, {backgroundColor:"yellow",transitionDuration:"2s"});
+                    visualiser.items_transition(cell, {backgroundColor:"yellow",transitionDuration:"2s"});
                 }
                 else {
                     console.log("checkpoint point cannnot be added")
@@ -206,7 +207,7 @@ export function draw(board){
                 board.walls.push(cell_pressed);
                 cell.setAttribute("class", "wall");
                 //css styling for walls
-                items_transition(cell, {backgroundColor:"black",transitionDuration:"2s"});
+                visualiser.items_transition(cell, {backgroundColor:"black",transitionDuration:"2s"});
             }
             
             //when visited the same weight node it doesnt need to set status
@@ -217,7 +218,7 @@ export function draw(board){
                 weight_points[event.target.id] = cell_pressed;
                 board.weights[event.target.id] = cell_pressed;
                 cell.setAttribute("class", "weight")
-                items_transition(cell, {backgroundColor:"orange",transitionDuration:"2s"});
+                visualiser.items_transition(cell, {backgroundColor:"orange",transitionDuration:"2s"});
             }
         });
         //when user released the mouse click

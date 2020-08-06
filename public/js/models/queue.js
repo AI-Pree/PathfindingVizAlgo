@@ -2,7 +2,7 @@
 /**
  * @constructor queue
  */
-function queue(){
+export default function Queue(){
     this.elements = []; // array of the queue
 }
 
@@ -12,7 +12,7 @@ function queue(){
  * element that needs to be added
  * adds the element at the end of the queue
  */
-queue.prototype.enqueue = function(element){
+Queue.prototype.enqueue = function(element){
     this.elements.push(element);
 }
 
@@ -20,7 +20,7 @@ queue.prototype.enqueue = function(element){
  * @function dequeue
  * removes the element from the front of the queue
  */
-queue.prototype.dequeue = function(){
+Queue.prototype.dequeue = function(){
     this.elements.shift();
 }
 
@@ -28,7 +28,7 @@ queue.prototype.dequeue = function(){
  * @function length
  * get the length of the element
  */
-queue.prototype.length = function(){
+Queue.prototype.length = function(){
     return this.elements.length;
 }
 
@@ -36,7 +36,7 @@ queue.prototype.length = function(){
  * @function isEmpty
  * check if the queue is empty or not 
  */
-queue.prototype.isEmpty = function(){
+Queue.prototype.isEmpty = function(){
     return this.elements.queue == 0;
 }
 
@@ -44,6 +44,6 @@ queue.prototype.isEmpty = function(){
  * @function peek
  * returns the first element in the queue
  */
-queue.prototype.peek = function(){
+Queue.prototype.peek = function(){
     return !this.isEmpty()?this.elements[0]:undefined;
 }
