@@ -99,7 +99,7 @@ export default class Board{
         for (var dir = 0; dir < directions.length; dir++){
             let neighbour = ([row + directions[dir][0],col + directions[dir][1]]).join(":");
             // only push the neighbour if its inside the grid table nodes
-            if (this.nodes[neighbour]){
+            if (this.nodes[neighbour] && (this.nodes[neighbour].status != "wall")){
                 result.push(neighbour);
             }           
         }
