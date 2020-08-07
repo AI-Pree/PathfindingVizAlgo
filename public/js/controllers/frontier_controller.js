@@ -40,15 +40,19 @@ export function frontier(board){
                         //keyframes
                         {
                             opacity: 0.1,
-                            backgroundColor: "#2D00F7",
+                            backgroundColor: "#404788FF",
                         },
                         {
-                            opacity: 0.4,
-                            backgroundColor: "#A100F2",
+                            opacity: 0.3,
+                            backgroundColor: "#238A8DFF",
+                        },
+                        {
+                            opacity: 0.6,
+                            backgroundColor: "#55C667FF",
                             
                         },
                         {
-                            backgroundColor: "#F20089",
+                            backgroundColor: "#FDE725FF",
                             opacity: 1,
                         }
                     ],
@@ -67,7 +71,7 @@ export function frontier(board){
         delay += 10; // delay for each animation to get generated after getting current node and its neighbour
         console.log("frontier has: ", frontier_queue);
     }  
-    
+
     //for showing poth 
     while(current_node_path != board.start){
         path.push(current_node_path);
