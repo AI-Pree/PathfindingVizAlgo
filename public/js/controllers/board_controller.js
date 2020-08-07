@@ -266,11 +266,11 @@ export function run(board){
         let algo = new Algorithms(board);        
         
         // implementing algorithms when run
-        algo.frontier();
+        algo.dijikstra();
         algo.pathVis();
 
         //visualising path and algorithm
-        visualiser.visualise["frontier"].apply(algo);
+        visualiser.visualise["dijikstra"].apply(algo);
         visualiser.visualise["pathVis"].apply(algo);
 
         // pass new upgraded grid after the run button is clicked

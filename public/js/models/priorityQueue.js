@@ -28,20 +28,21 @@ export default class PriortyQueue{
      */
     enqueue(element, priority){
         //creating a object for the priority queue element
-        var pqelement = new pqElement(element, priority);
+        var pq = new pqElement(element, priority);
         var max = false;
 
         for(let i = 0; i < this.item.length; i ++){
-            if(this.item[i] > pqElement.priority){
-                this.item.splice(i, 0, pqElement);
+            if(this.item[i].priority > pq.priority){
+                this.item.splice(i, 0, pq);
                 max = true;
+                break;
             }
         }
-        
+
         // if the value for priortiy queue is high then it is added 
         // to the lowest heirarchy level
         if(!max){
-            this.item.push(pqElement);
+            this.item.push(pq);
         }
         
     }

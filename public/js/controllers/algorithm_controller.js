@@ -6,6 +6,7 @@
 
  //imports
 import Visualiser from './visualiser_controller.js';
+import PriorityQueue from '../models/priorityQueue.js';
 
 //visualiser object for animation
 let visualiser = new Visualiser();
@@ -25,40 +26,44 @@ export default function Algorithms(board){
 }
 
 /**
- * @function frontier
- * is implementing flood-fill algorithm to find the destination
+ * @function dijikstra
+ * is implementing Dijiskstra algorithm to find the optimal path
+ * its uses uniform cost search method
  */
-Algorithms.prototype.frontier = function(){
+Algorithms.prototype.dijikstra = function(){
     console.log(this.board);
-    let frontier_queue = [];  // queue implementation by using array
+    let frontier_queue = new PriorityQueue();  // using prirority queue
     this.previous_node[this.board.start] = ""; // start node doesnt have any previous node it came from
     let goal = this.board.destination;
-    frontier_queue.push(this.board.start) // adding a start point for the frontier to run
+    frontier_queue.enqueue(this.board.start,0) // adding a start point for the frontier to run
     let current_node = ""; // frontier of the node that needs to be determined
-    
+    let current_cost = {};
+    current_cost[this.board.start] = 0;
+
     // when frontier has covered all the cell in the this.board or early
     // exit implemented when the frontier finds the destination 
     // point on the this.board   
-    while (!(frontier_queue.length == 0) && !(frontier_queue.includes(goal))) {
-        current_node = frontier_queue.shift();
+    while (!(frontier_queue.length == 0)) {
+        current_node = frontier_queue.dequeue().element;
         console.log("current node:", current_node);
+        if(current_node == goal){
+            break;
+        }
         this.board.getNeighbours(current_node).forEach(next_node => {
-            if (!(next_node in this.previous_node)) {
+            let new_cost = current_cost[current_node] + this.board.nodes[next_node].weight; // new cost after adding the weight of the node
+            if (!(next_node in current_cost) || new_cost < current_cost[next_node]) {
+                current_cost[next_node] = new_cost;
+                let priority = new_cost
                 console.log("next-node is: ", next_node);                          
                 this.previous_node_stack.push(next_node);
                 this.previous_node[next_node] = current_node;
-                frontier_queue.push(next_node);
+                frontier_queue.enqueue(next_node, priority);
                 console.log("current node neighbouts: ", next_node);
             }              
-        });        
+        }); 
+        console.log("cost so far: ", current_cost);       
         console.log("frontier has: ", frontier_queue);
     }
-}
-/**
- * @function dijikstra
- */
-Algorithms.prototype.dijikstra = function(){
-    console.log("Hey u listened me ayee");
 }
 
 /**

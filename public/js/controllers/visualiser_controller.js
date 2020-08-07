@@ -60,10 +60,10 @@ Visualiser.prototype.visualise = {
     })
   },
   /**
-   * @funciton frontier
-   * Visualising the flood fill algorithm in the html board
+   * @funciton dijikstra
+   * Visualising the dijikstra algorithm in the html board
    */
-  frontier:function(){
+  dijikstra:function(){
     this.previous_node_stack.forEach(next_node=>{
       if(next_node != this.goal){
         document.getElementById(next_node).animate([
