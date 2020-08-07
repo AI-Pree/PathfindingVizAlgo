@@ -15,9 +15,6 @@ let visualiser = new Visualiser();
  * Uses flood fill algorithm
  */
 export function frontier(board){
-
-    let height = board.height;
-    let width = board.width;
     console.log(board);
     let frontier_queue = [];  // queue implementation by using array  
     let previous_node = {};
@@ -26,6 +23,11 @@ export function frontier(board){
     frontier_queue.push(board.start)
     let current_node = "";
     let delay = 0;
+    let path = []
+    let current_node_path = goal;
+    // when frontier has covered all the cell in the board or early
+    // exit implemented when the frontier finds the destination 
+    // point on the board   
     while (!(frontier_queue.length == 0) && !(frontier_queue.includes(goal))) {
         current_node = frontier_queue.shift();
         console.log("current node:", current_node);
@@ -43,6 +45,7 @@ export function frontier(board){
                         {
                             opacity: 0.4,
                             backgroundColor: "#A100F2",
+                            
                         },
                         {
                             backgroundColor: "#F20089",
@@ -51,7 +54,7 @@ export function frontier(board){
                     ],
                     {
                         //timing options
-                        duration: 2500,
+                        duration: 2000,
                         delay: delay,
                         fill: "forwards",
                     });
@@ -61,7 +64,42 @@ export function frontier(board){
                 console.log("current node neighbouts: ", next_node);
             }              
         });
-        delay += 20; // delay for each animation to get generated after getting current node and its neighbour
+        delay += 10; // delay for each animation to get generated after getting current node and its neighbour
         console.log("frontier has: ", frontier_queue);
-    }    
+    }  
+    
+    //for showing poth 
+    while(current_node_path != board.start){
+        path.push(current_node_path);
+        current_node_path = previous_node[current_node_path]
+    }
+    path.push(board.start);
+    path.reverse();
+    let path_delay = 0;
+    path.forEach(cell=>{
+        
+        console.log(cell)
+        document.getElementById(cell).animate([
+            //keyframes
+            {
+                opacity: 0,
+                backgroundColor: "#2D00F7",
+                height:"0px",
+                width:"0px",
+            },
+            {
+                opacity: 1,
+                easing:"linear",
+                backgroundColor: "#A100F2",
+                
+            },            
+        ],
+        {
+            //timing options
+            duration: 500,
+            delay: delay + path_delay,
+            fill: "forwards",
+        });
+        path_delay += 50;
+    })
 }
