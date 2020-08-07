@@ -54,7 +54,7 @@ export function frontier(board){
                     ],
                     {
                         //timing options
-                        duration: 2500,
+                        duration: 2000,
                         delay: delay,
                         fill: "forwards",
                     });
@@ -64,7 +64,7 @@ export function frontier(board){
                 console.log("current node neighbouts: ", next_node);
             }              
         });
-        delay += 20; // delay for each animation to get generated after getting current node and its neighbour
+        delay += 10; // delay for each animation to get generated after getting current node and its neighbour
         console.log("frontier has: ", frontier_queue);
     }
 
