@@ -5,7 +5,7 @@
 
 //imports 
 import Visualiser from '../controllers/visualiser_controller.js';
-import {frontier} from "../controllers/frontier_controller.js";
+import AlgorithmVis from "./algorithm_controller.js";
 
 //visualiser object for animation
 let visualiser = new Visualiser();
@@ -260,7 +260,11 @@ export function run(board){
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
         console.log("running....");
-        frontier(board); 
+        
+        // implementing algorithms when run
+        let algoVis = new AlgorithmVis(board);
+        algoVis.frontier(); 
+        algoVis.dijikstra();
         
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
