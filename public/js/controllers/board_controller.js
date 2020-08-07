@@ -227,7 +227,7 @@ export function draw(board){
             if(mode["is_drawing"]['0'] && mode["is_adding_weight"]['0'] && !obstacles[event.target.className]){
                 console.log("weight point has been added: ", event.target.id);
                 cell_pressed.status = "weight";
-                cell_pressed.weight += 10;
+                cell_pressed.weight += 5;
                 weight_points[event.target.id] = cell_pressed;
                 board.weights[event.target.id] = cell_pressed;
                 cell.setAttribute("class", "weight")
@@ -263,15 +263,12 @@ export function run(board){
         console.log("running....");
 
         //alogrithm handler
-        let algo = new Algorithms(board);
-        
+        let algo = new Algorithms(board);        
         
         // implementing algorithms when run
         algo.frontier();
         algo.pathVis();
-        algo.dijikstra();
 
-        
         //visualising path and algorithm
         visualiser.visualise["frontier"].apply(algo);
         visualiser.visualise["pathVis"].apply(algo);
@@ -384,7 +381,7 @@ const clear={
                 //changing the status of the node back to unvisited in the board object        
                 Object.keys(board.weights).forEach((cell) => {
                     board.weights[cell].status = "unvisited";
-                    board.weights[cell].weight -= 10;
+                    board.weights[cell].weight -= 5;
                 })
                 //clearing all the weights
                 board.weights = {};
