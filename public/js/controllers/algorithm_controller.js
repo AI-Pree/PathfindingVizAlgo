@@ -14,21 +14,28 @@ let visualiser = new Visualiser();
  * @@constructor algorithm
  * Uses flood fill algorithm
  */
-export default function AlgorithmVis(board){
+export default function Algorithms(board){
     this.board = board;
+    this.previous_node = {};
+    this.previous_node_stack = [];
+    this.goal = board.destination;
+    this.delay = 0;
+    this.path = [];
+    this.path_delay = 0;
 }
 
-AlgorithmVis.prototype.frontier = function(){
+/**
+ * @function frontier
+ * is implementing flood-fill algorithm to find the destination
+ */
+Algorithms.prototype.frontier = function(){
     console.log(this.board);
-    let frontier_queue = [];  // queue implementation by using array  
-    let previous_node = {};
-    previous_node[this.board.start] = "";
+    let frontier_queue = [];  // queue implementation by using array
+    this.previous_node[this.board.start] = ""; // start node doesnt have any previous node it came from
     let goal = this.board.destination;
-    frontier_queue.push(this.board.start)
-    let current_node = "";
-    let delay = 0;
-    let path = []
-    let current_node_path = goal;
+    frontier_queue.push(this.board.start) // adding a start point for the frontier to run
+    let current_node = ""; // frontier of the node that needs to be determined
+    
     // when frontier has covered all the cell in the this.board or early
     // exit implemented when the frontier finds the destination 
     // point on the this.board   
@@ -36,80 +43,36 @@ AlgorithmVis.prototype.frontier = function(){
         current_node = frontier_queue.shift();
         console.log("current node:", current_node);
         this.board.getNeighbours(current_node).forEach(next_node => {
-            if (!(next_node in previous_node)) {
-                console.log("next-node is: ", next_node);
-                //animation for the frontier
-                if(next_node != goal){
-                    document.getElementById(next_node).animate([
-                        //keyframes
-                        {
-                            opacity: 0.1,
-                            backgroundColor: "#2D00F7",
-                        },
-                        {
-                            opacity: 0.4,
-                            backgroundColor: "#A100F2",
-                            
-                        },
-                        {
-                            backgroundColor: "#F20089",
-                            opacity: 1,
-                        }
-                    ],
-                    {
-                        //timing options
-                        duration: 2000,
-                        delay: delay,
-                        fill: "forwards",
-                    });
-                }             
-                previous_node[next_node] = current_node;
+            if (!(next_node in this.previous_node)) {
+                console.log("next-node is: ", next_node);                          
+                this.previous_node_stack.push(next_node);
+                this.previous_node[next_node] = current_node;
                 frontier_queue.push(next_node);
                 console.log("current node neighbouts: ", next_node);
             }              
-        });
-        delay += 10; // delay for each animation to get generated after getting current node and its neighbour
+        });        
         console.log("frontier has: ", frontier_queue);
     }
-
-    //for showing poth 
-    while(current_node_path != this.board.start){
-        path.push(current_node_path);
-        current_node_path = previous_node[current_node_path]
-    }
-    path.push(this.board.start);
-    path.reverse();
-    let path_delay = 0;
-    path.forEach(cell=>{        
-        console.log(cell)
-        document.getElementById(cell).animate([
-            //keyframes
-            {
-                opacity: 0,
-                backgroundColor: "#2D00F7",
-            },
-            {
-                opacity: 1,
-                easing:"linear",
-                backgroundColor: "#A100F2",
-                
-            },            
-        ],
-        {
-            //timing options
-            duration: 500,
-            delay: delay + path_delay,
-            fill: "forwards",
-        });
-        
-        /*uncomment if want to show start and destination point */
-        // if(!(cell == this.board.start || cell == goal)){
-            
-        // }        
-        path_delay += 50;
-    })
+}
+/**
+ * @function dijikstra
+ */
+Algorithms.prototype.dijikstra = function(){
+    console.log("Hey u listened me ayee");
 }
 
-AlgorithmVis.prototype.dijikstra = function(){
-    console.log("Hey u listened me ayee");
+/**
+ * @function pathVis
+ * add all the paths node address from start to point
+ */
+Algorithms.prototype.pathVis = function(){    
+    let current_path_node = this.board.destination; // started with destination
+    //for showing path 
+    while(current_path_node != this.board.start){
+        this.path.push(current_path_node);
+        current_path_node = this.previous_node[current_path_node]
+    }
+    this.path.push(this.board.start);
+    this.path.reverse();
+    console.log("path has:", this.path);
 }

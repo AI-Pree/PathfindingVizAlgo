@@ -24,7 +24,7 @@ export default class Node{
     constructor(id, status){
         this.id = id;
         this.status = status;
-        this.weight = 2;
+        this.weight = 1;
         this.pressedMode = "stationary";
     }
 }
