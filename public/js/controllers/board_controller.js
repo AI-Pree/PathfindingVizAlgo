@@ -37,6 +37,29 @@ const mode = {
     is_adding_destination:{'0':false,'1': "red"},
 }
 
+//selected add items
+const select_add = {
+    "Start Point": "is_adding_start",
+    "Destination Point": "is_adding_destination",
+    "Weight": "is_adding_weight",
+    "Checkpoint": "is_adding_checkpoint",
+}
+
+function adding_el(el){
+    el.addEventListener("click",(event) => {
+        console.log(event.target.text)
+        let selected_item = event.target.text;        
+        Object.keys(mode).forEach(key=>{
+            if(key != select_add[selected_item]){
+                mode[key]['0'] = false;
+            }
+            else{
+                mode[key]['0'] = true;
+            }
+        });
+    });
+}
+
 /**
  * @function draw
  * create a wall in the grid
@@ -59,37 +82,38 @@ export function draw(board){
     let weight_points = {}; // all the address of the node that has weights
     let checkpoint_points = {}; // all the address of the node that has checkpoints
 
-    //when user clicks the add_start button
-    start_el.addEventListener("click", () => {
-        mode["is_adding_start"]['0'] = true;              
-    });
+    let add_menu_el = document.getElementById("add");
+    adding_el(add_menu_el);
+    // //when user clicks the add_start button
+    // start_el.addEventListener("click", () => {
+    //     mode["is_adding_start"]['0'] = true;              
+    // });
 
-    //when user clicks the add_destination button
-    destination_el.addEventListener("click", () => {
-        mode["is_adding_destination"]['0'] = true;            
-    });
+    // //when user clicks the add_destination button
+    // destination_el.addEventListener("click", () => {
+    //     mode["is_adding_destination"]['0'] = true;            
+    // });
 
-    //when user clicks the add_weights button
-    weight_el.addEventListener("click", () => {
-        mode["is_adding_weight"]['0'] = true;            
-    });
+    // //when user clicks the add_weights button
+    // weight_el.addEventListener("click", () => {
+    //     mode["is_adding_weight"]['0'] = true;            
+    // });
 
-    //when user clicks the add_checkpoints button
-    checkpoint_el.addEventListener("click", () => {
-        mode["is_adding_checkpoint"]['0'] = true;            
-    });
+    // //when user clicks the add_checkpoints button
+    // checkpoint_el.addEventListener("click", () => {
+    //     mode["is_adding_checkpoint"]['0'] = true;            
+    // });
 
     //when user hovers around the cell
     cellHTML.forEach((cell) => {
         cell.addEventListener("mouseover", (event) =>{
             if(!obstacles[event.target.className] && !(mode["is_adding_start"]['0'] || mode["is_adding_destination"]['0'] || mode["is_adding_weight"]['0'] || mode["is_adding_checkpoint"]['0'])){
-                cell.style.backgroundColor = "#000";
-                cell.style.opacity = 0.3;
+                visualiser.items_transition(cell, {backgroundColor:"#000", opacity:0.3})
             }
             if(!obstacles[event.target.className]){
                 Object.entries(mode).forEach(([key,value])=>{
                     if(value['0'] && key != "is_drawing"){
-                        visualiser.items_transition(cell,{backgroundColor:value['1'],transitionDuration:"2s",opacity:0.3}); // colors of the added node types
+                        visualiser.items_transition(cell,{backgroundColor:value['1'],opacity:0.3}); // colors of the added node types
                     }                
                 });
             }                
@@ -252,7 +276,7 @@ export function run(board){
         frontier(board);
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
-        console.log("The wall node is:", board.walls)
+        console.log("The wall node is:", board.walls);
     });
 };
 
