@@ -40,25 +40,21 @@ export function frontier(board){
                         //keyframes
                         {
                             opacity: 0.1,
-                            backgroundColor: "#404788FF",
+                            backgroundColor: "#2D00F7",
                         },
                         {
-                            opacity: 0.3,
-                            backgroundColor: "#238A8DFF",
-                        },
-                        {
-                            opacity: 0.6,
-                            backgroundColor: "#55C667FF",
+                            opacity: 0.4,
+                            backgroundColor: "#A100F2",
                             
                         },
                         {
-                            backgroundColor: "#FDE725FF",
+                            backgroundColor: "#F20089",
                             opacity: 1,
                         }
                     ],
                     {
                         //timing options
-                        duration: 2000,
+                        duration: 2500,
                         delay: delay,
                         fill: "forwards",
                     });
@@ -68,9 +64,9 @@ export function frontier(board){
                 console.log("current node neighbouts: ", next_node);
             }              
         });
-        delay += 10; // delay for each animation to get generated after getting current node and its neighbour
+        delay += 20; // delay for each animation to get generated after getting current node and its neighbour
         console.log("frontier has: ", frontier_queue);
-    }  
+    }
 
     //for showing poth 
     while(current_node_path != board.start){
@@ -80,16 +76,13 @@ export function frontier(board){
     path.push(board.start);
     path.reverse();
     let path_delay = 0;
-    path.forEach(cell=>{
-        
+    path.forEach(cell=>{        
         console.log(cell)
         document.getElementById(cell).animate([
             //keyframes
             {
                 opacity: 0,
                 backgroundColor: "#2D00F7",
-                height:"0px",
-                width:"0px",
             },
             {
                 opacity: 1,
@@ -104,6 +97,11 @@ export function frontier(board){
             delay: delay + path_delay,
             fill: "forwards",
         });
+        
+        /*uncomment if want to show start and destination point */
+        // if(!(cell == board.start || cell == goal)){
+            
+        // }        
         path_delay += 50;
     })
 }
