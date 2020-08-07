@@ -45,6 +45,12 @@ const select_add = {
     "Checkpoint": "is_adding_checkpoint",
 }
 
+/**
+ * @function adding_el
+ * This function changes the event of adding to be triggered in the board
+ * @param el
+ * is the DOM of the adding menu 
+ */
 function adding_el(el){
     el.addEventListener("click",(event) => {
         console.log(event.target.text)
@@ -82,27 +88,8 @@ export function draw(board){
     let weight_points = {}; // all the address of the node that has weights
     let checkpoint_points = {}; // all the address of the node that has checkpoints
 
-    let add_menu_el = document.getElementById("add");
-    adding_el(add_menu_el);
-    // //when user clicks the add_start button
-    // start_el.addEventListener("click", () => {
-    //     mode["is_adding_start"]['0'] = true;              
-    // });
-
-    // //when user clicks the add_destination button
-    // destination_el.addEventListener("click", () => {
-    //     mode["is_adding_destination"]['0'] = true;            
-    // });
-
-    // //when user clicks the add_weights button
-    // weight_el.addEventListener("click", () => {
-    //     mode["is_adding_weight"]['0'] = true;            
-    // });
-
-    // //when user clicks the add_checkpoints button
-    // checkpoint_el.addEventListener("click", () => {
-    //     mode["is_adding_checkpoint"]['0'] = true;            
-    // });
+    let add_menu_el = document.getElementById("add"); // DOM for the add id, which is add menu
+    adding_el(add_menu_el); // when user choose to add item in the board    
 
     //when user hovers around the cell
     cellHTML.forEach((cell) => {
@@ -273,7 +260,7 @@ export function run(board){
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
         console.log("running....");
-        frontier(board);
+        frontier(board); 
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
         console.log("The wall node is:", board.walls);
