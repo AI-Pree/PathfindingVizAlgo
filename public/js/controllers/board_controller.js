@@ -261,6 +261,7 @@ export function run(board){
         console.log("stop: ",board.stop);
         console.log("running....");
         frontier(board); 
+        
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
         console.log("The wall node is:", board.walls);

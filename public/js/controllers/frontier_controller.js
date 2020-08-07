@@ -15,6 +15,9 @@ let visualiser = new Visualiser();
  * Uses flood fill algorithm
  */
 export function frontier(board){
+
+    let height = board.height;
+    let width = board.width;
     console.log(board);
     let frontier_queue = [];  // queue implementation by using array  
     let previous_node = {};
@@ -42,12 +45,12 @@ export function frontier(board){
                         },
                         {
                             backgroundColor:"#F20089",
-                            opacity:1
+                            opacity:1,
                         }
                     ],
                     {
                         //timing options
-                        duration:2000,
+                        duration:2500,
                         delay:delay,
                         fill:"forwards",
                     }
@@ -57,7 +60,7 @@ export function frontier(board){
                 console.log("current node neighbouts: ", next_node);
             }              
         });
-        delay += 20; // delay for each animation to get generated after getting current node and its neighbour
+        delay += 10; // delay for each animation to get generated after getting current node and its neighbour
         console.log("frontier has: ", frontier_queue);
     }    
 }
