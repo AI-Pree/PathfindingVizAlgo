@@ -33,34 +33,35 @@ export function frontier(board){
             if (!(next_node in previous_node)) {
                 console.log("next-node is: ", next_node);
                 //animation for the frontier
-                document.getElementById(next_node).animate([
+                if(next_node != goal){
+                    document.getElementById(next_node).animate([
                         //keyframes
                         {
-                            opacity:0.1,
-                            backgroundColor:"#2D00F7",
+                            opacity: 0.1,
+                            backgroundColor: "#2D00F7",
                         },
                         {
-                            opacity:0.4,
-                            backgroundColor:"#A100F2",
+                            opacity: 0.4,
+                            backgroundColor: "#A100F2",
                         },
                         {
-                            backgroundColor:"#F20089",
-                            opacity:1,
+                            backgroundColor: "#F20089",
+                            opacity: 1,
                         }
                     ],
                     {
                         //timing options
-                        duration:2500,
-                        delay:delay,
-                        fill:"forwards",
-                    }
-                )
+                        duration: 2500,
+                        delay: delay,
+                        fill: "forwards",
+                    });
+                }             
                 previous_node[next_node] = current_node;
                 frontier_queue.push(next_node);
                 console.log("current node neighbouts: ", next_node);
             }              
         });
-        delay += 10; // delay for each animation to get generated after getting current node and its neighbour
+        delay += 20; // delay for each animation to get generated after getting current node and its neighbour
         console.log("frontier has: ", frontier_queue);
     }    
 }
