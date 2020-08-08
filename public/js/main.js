@@ -1,5 +1,5 @@
 import Board from './models/board.js';
-import {draw, run, stop, clear_el,algorithm} from './controllers/board_controller.js';
+import {draw, run, stop, clear_el} from './controllers/board_controller.js';
 
 // height of the nav in the browser
 let nav_height = document.getElementById("nav_html").clientHeight + 30; // value of 5 can be desirable depending on the bottom offset
@@ -32,7 +32,7 @@ var initialise = function(){
     console.log(new_board.getNeighbours("0:2"));    
     console.log("run: ",new_board.run);
     console.log("stop: ",new_board.stop); 
-    algorithm(new_board);    
+    run(new_board);    
     stop(new_board);
     clear_el(new_board);
     draw(new_board);

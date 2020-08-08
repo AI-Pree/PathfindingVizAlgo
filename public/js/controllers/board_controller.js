@@ -14,6 +14,11 @@ let visualiser = new Visualiser();
 
 // algorithm dict
 const algoToVisualise = {
+    /**
+     * @function Dijkstra's algorithm
+     * Runs all the process on the dijkstra algorithm and visualises it 
+     * @param algo 
+     */
     "Dijkstra's algorithm":function(algo){                    
         // implementing algorithms when run
         algo.dijikstra();
@@ -22,7 +27,64 @@ const algoToVisualise = {
         //visualising path and algorithm
         visualiser.visualise["dijikstra"].apply(algo);
         visualiser.visualise["pathVis"].apply(algo);
-    }
+    },
+    /**
+     * @function Dijkstra's algorithm
+     * Runs all the process on the dijkstra algorithm and visualises it 
+     * @param algo 
+     */
+    "A* algorithm":function(algo){
+        console.log("not yet")
+    },
+    /**
+     * @function D* algorithm
+     * Runs all the process on the d* algorithm and visualises it 
+     * @param algo 
+     */
+    "D* algorithm":function(algo){
+        console.log("not yet")
+    },
+    /**
+     * @function Single Source Shortest Path
+     * Runs all the process on the Single Source Shortest Path algorithm and visualises it 
+     * @param algo 
+     */
+    "Single Source Shortest Path":function(algo){
+        console.log("not yet")
+    },
+    /**
+     * @function Minimum Spanning Tree
+     * Runs all the process on the  Minimum Spanning Tree and visualises it 
+     * @param algo 
+     */
+    "Minimum Spanning Tree":function(algo){
+        console.log("not yet")
+    },
+    /**
+     * @function All-Pairs Shortest Paths
+     * Runs all the process on the dijkstra algorithm and visualises it 
+     * @param algo 
+     */
+    "All-Pairs Shortest Paths":function(algo){
+        console.log("not yet")
+    },
+    /**
+     * @function Greedy Breadth First Search
+     * Runs all the process on the Greedy Breadth First Search and visualises it 
+     * @param algo 
+     */
+    "Greedy Breadth First Search":function(algo){
+        console.log("not yet")
+    },
+    /**
+     * @function Dijkstra's algorithm
+     * Runs all the process on the Greedy Depth First Search algorithm and visualises it 
+     * @param algo 
+     */
+    "Greedy Depth First Search":function(algo){
+        console.log("not yet")
+    },
+
 }
 
 //obstacles dict
@@ -266,7 +328,21 @@ export function draw(board){
  * @function run
  * runs the algorithm selected by the user
  */
-export function run(board,algo){
+export function run(board){
+    //alogrithm handler
+    let algo = new Algorithms(board); 
+    let algorithm_el = document.getElementById('algorithm_list');
+    algorithm_el.addEventListener("click",(event)=>{     
+        let name = event.target.text; //getting the choosen algorithm by the user
+        let algoName = document.getElementById("algorithm_name"); // dom of the button name that needs to be changed with the picked algorithm
+        // doesnt change if its the same algorithm and the name is empty
+        if(algoName.innerHTML != name && name){
+            algoName.innerHTML = name; // replacing the name with the new picked name
+            algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
+        }
+        board.algo = name;       
+    });
+    
     const run_el = document.getElementById("run");    
     run_el.addEventListener("click", ()=>{
         board.run = true;
@@ -443,7 +519,7 @@ export function clear_el(board){
  * @function pathfinding
  * select the pathfinding algorithm
  */
-export const algorithm = (board) => {
+export const algorithmRun = (board) => {
     //alogrithm handler
     let algo = new Algorithms(board); 
     let algorithm_el = document.getElementById('algorithm_list');
@@ -453,10 +529,8 @@ export const algorithm = (board) => {
         // doesnt change if its the same algorithm and the name is empty
         if(algoName.innerHTML != name && name){
             algoName.innerHTML = name; // replacing the name with the new picked name
-            console.log(name);
             algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
         }
-        board.algo = name;
-        run(board, algo); // run the specific choose algorithm 
+        board.algo = name;       
     });
 };
