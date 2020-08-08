@@ -102,7 +102,7 @@ Visualiser.prototype.visualise = {
       ],
         {
           //timing options
-          duration: 2000,
+          duration: 1500,
           easing: "ease-in",
           delay: this.delay,
           fill: "forwards",
