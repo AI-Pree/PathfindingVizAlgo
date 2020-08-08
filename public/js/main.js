@@ -9,7 +9,7 @@ let nav_height = document.getElementById("nav_html").clientHeight + 30; // value
  * the height based on the window size of the browser and dividing it by 25 to assign the height of the cell size in the grid to be 25
  * determinses how many rows can be added in the table
  */
-let height = Math.floor(($(document).height() - nav_height)/25); // subtracting the document height with the nav height in the browser to remove redundant scrolling from rows in table
+let height = Math.floor(($(document).height() - nav_height)/26); // subtracting the document height with the nav height in the browser to remove redundant scrolling from rows in table
 
 /**
  * @param width
@@ -17,7 +17,7 @@ let height = Math.floor(($(document).height() - nav_height)/25); // subtracting 
  * the width based on the window size of the browser and dividing it by 25 to assign the width of the cell size in the grid to be 25px
  * determines how many columns can be added in the table
  */
-let width = Math.floor($(document).width()/25);
+let width = Math.floor($(document).width()/26);
 
 /**
  * @function initialise

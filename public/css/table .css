@@ -6,9 +6,15 @@ td {
   border:1px solid #283042;
   text-align: center;
   font-weight: 600;
-  font-size: smaller;
+  font-size: 0px;
   color: #fff;
-  user-select: select none;
+  user-select: none;
+  padding:0px !important;
+
+  /* Hide the text.
+  text-indent: 100%;
+  white-space: nowrap;*/
+  overflow: hidden;
 }
 
 #board{

@@ -66,47 +66,48 @@ Visualiser.prototype.visualise = {
    */
   dijikstra:function(){
     Object.entries(this.current_cost).forEach(([next_node, value])=>{
-      let cellHTML = document.getElementById(next_node);
-      //not make start and end node invisible at start
-      if(next_node == this.board.start || next_node == this.goal || this.board.nodes[next_node].status == "checkpoint"){
-        cellHTML.innerHTML = ""; 
+      let cellHTML = document.getElementById(next_node);     
+      let opacity_all = 0;
+      let all_color = "";
+      if (cellHTML.className == "weight") {
+        opacity_all= 0.6;
+        all_color = "orange";
       }
-      else{
-        cellHTML.style.opacity = 0;
-        cellHTML.innerHTML = value;
+      else {
+        all_color = "#F20089";
+        opacity_all = 1;
       }
-      
-      let opacity_weight = 0;
-      if(next_node != this.goal){
-        if(cellHTML.className == "weight"){
-          opacity_weight = 0.3;
-        } 
-        else{
-          opacity_weight = 1;
-        }
-        document.getElementById(next_node).animate([
-            //keyframes
-            {
-                opacity: 0.1,
-                backgroundColor: "#2D00F7",
-            },
-            {
-                opacity: 0.2,
-                backgroundColor: "#A100F2",
-                
-            },
-            {
-                backgroundColor: "#F20089",
-                opacity: opacity_weight,
-            }
-        ],
+      document.getElementById(next_node).animate([
+        //keyframes
         {
-            //timing options
-            duration: 2000,
-            delay: this.delay,
-            fill: "forwards",
-        });
-      }
+          opacity: 0.1,
+          backgroundColor: "#2D00F7",
+          padding:"0px",
+          overflow: "hidden",
+        },
+        {
+          opacity: 0.2,
+          backgroundColor: "#A100F2",
+          padding:"0px",
+          overflow: "hidden",
+
+        },
+        {
+          backgroundColor: all_color,
+          opacity: opacity_all,
+          fontSize: "x-small",
+          padding:"0px",
+          overflow: "hidden"
+        }
+      ],
+        {
+          //timing options
+          duration: 2000,
+          easing: "ease-in",
+          delay: this.delay,
+          fill: "forwards",
+        });  
+      cellHTML.innerHTML = value;
       this.delay += 10; // delay for each animation to get generated after getting current node and its neighbour     
     })    
   },
