@@ -23,6 +23,7 @@ export default function Algorithms(board){
     this.delay = 0;
     this.path = [];
     this.path_delay = 0;
+    this.current_cost = {};
 }
 
 /**
@@ -37,8 +38,10 @@ Algorithms.prototype.dijikstra = function(){
     let goal = this.board.destination;
     frontier_queue.enqueue(this.board.start,0) // adding a start point for the frontier to run
     let current_node = ""; // frontier of the node that needs to be determined
-    let current_cost = {};
-    current_cost[this.board.start] = 0;
+    this.current_cost = {};
+    this.current_cost[this.board.start] = 0;
+
+   
 
     // when frontier has covered all the cell in the this.board or early
     // exit implemented when the frontier finds the destination 
@@ -50,9 +53,9 @@ Algorithms.prototype.dijikstra = function(){
             break;
         }
         this.board.getNeighbours(current_node).forEach(next_node => {
-            let new_cost = current_cost[current_node] + this.board.nodes[next_node].weight; // new cost after adding the weight of the node
-            if (!(next_node in current_cost) || new_cost < current_cost[next_node]) {
-                current_cost[next_node] = new_cost;
+            let new_cost = this.current_cost[current_node] + this.board.nodes[next_node].weight; // new cost after adding the weight of the node           
+            if (!(next_node in this.current_cost) || new_cost < this.current_cost[next_node]) {                
+                this.current_cost[next_node] = new_cost;
                 let priority = new_cost
                 console.log("next-node is: ", next_node);                          
                 this.previous_node_stack.push(next_node);
@@ -61,7 +64,7 @@ Algorithms.prototype.dijikstra = function(){
                 console.log("current node neighbouts: ", next_node);
             }              
         }); 
-        console.log("cost so far: ", current_cost);       
+        console.log("cost so far: ", this.current_cost);       
         console.log("frontier has: ", frontier_queue);
     }
 }

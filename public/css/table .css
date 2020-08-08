@@ -4,6 +4,11 @@ td {
   height:25px;
   width:25px;
   border:1px solid #283042;
+  text-align: center;
+  font-weight: 600;
+  font-size: smaller;
+  color: #fff;
+  user-select: select none;
 }
 
 #board{

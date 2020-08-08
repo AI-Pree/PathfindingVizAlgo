@@ -33,7 +33,8 @@ Visualiser.prototype.visualise = {
   pathVis: function(){
     this.path.forEach(cell=>{        
       console.log(cell)
-      //animating the path
+      //animating the path     
+      
       document.getElementById(cell).animate([
           //keyframes
           {
@@ -64,8 +65,25 @@ Visualiser.prototype.visualise = {
    * Visualising the dijikstra algorithm in the html board
    */
   dijikstra:function(){
-    this.previous_node_stack.forEach(next_node=>{
+    Object.entries(this.current_cost).forEach(([next_node, value])=>{
+      let cellHTML = document.getElementById(next_node);
+      //not make start and end node invisible at start
+      if(next_node == this.board.start || next_node == this.goal || this.board.nodes[next_node].status == "checkpoint"){
+        cellHTML.innerHTML = ""; 
+      }
+      else{
+        cellHTML.style.opacity = 0;
+        cellHTML.innerHTML = value;
+      }
+      
+      let opacity_weight = 0;
       if(next_node != this.goal){
+        if(cellHTML.className == "weight"){
+          opacity_weight = 0.3;
+        } 
+        else{
+          opacity_weight = 1;
+        }
         document.getElementById(next_node).animate([
             //keyframes
             {
@@ -73,13 +91,13 @@ Visualiser.prototype.visualise = {
                 backgroundColor: "#2D00F7",
             },
             {
-                opacity: 0.4,
+                opacity: 0.2,
                 backgroundColor: "#A100F2",
                 
             },
             {
                 backgroundColor: "#F20089",
-                opacity: 1,
+                opacity: opacity_weight,
             }
         ],
         {
