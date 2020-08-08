@@ -35,7 +35,7 @@ var initialise = function(){
     run(new_board);
     stop(new_board);
     clear_el(new_board);
-    algorithm();
+    new_board.algo = algorithm();
     draw(new_board);
 }
 console.log("rows: " + height, "columns: " + width);

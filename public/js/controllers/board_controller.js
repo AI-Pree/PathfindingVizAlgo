@@ -11,6 +11,22 @@ import Algorithms from "./algorithm_controller.js";
 //visualiser object for animation
 let visualiser = new Visualiser();
 
+//alogrithm handler
+let algo = new Algorithms(board); 
+
+// algorithm dict
+const algoToVisualise = {
+    "Dijikstra's Algorithm":function(){               
+        // implementing algorithms when run
+        algo.dijikstra();
+        algo.pathVis();
+
+        //visualising path and algorithm
+        visualiser.visualise["dijikstra"].apply(algo);
+        visualiser.visualise["pathVis"].apply(algo);
+    }
+}
+
 //obstacles dict
 const obstacles = {
     "wall":"wall",
@@ -260,18 +276,8 @@ export function run(board){
         board.status = false;
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
-        console.log("running....");
-
-        //alogrithm handler
-        let algo = new Algorithms(board);        
-        
-        // implementing algorithms when run
-        algo.dijikstra();
-        algo.pathVis();
-
-        //visualising path and algorithm
-        visualiser.visualise["dijikstra"].apply(algo);
-        visualiser.visualise["pathVis"].apply(algo);
+        console.log("running....");  
+        algoToVisualise[board.algo];
 
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
@@ -450,4 +456,5 @@ export const algorithm = () => {
             algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
         }        
     });
+    return name;
 };
