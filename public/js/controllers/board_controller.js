@@ -273,6 +273,11 @@ export function draw(board){
                     cell_pressed.pressedMode = "moveable";
                     cell.setAttribute("class", "checkpoint")
                     console.log("checkpoint point has been added: ", event.target.id);
+                    
+                    console.log("checkpoints number:",Object.keys(checkpoint_points).length)
+                    if (Object.keys(checkpoint_points).length > 4) {
+                        checkpoint_el.setAttribute("class", "dropdown-item disabled")
+                    }
 
                     //changing the cell color to yellow
                     visualiser.items_transition(cell, {backgroundColor:"yellow",transitionDuration:"2s"});
@@ -342,7 +347,7 @@ export function run(board){
         }
         board.algo = name;       
     });
-
+    
     const run_el = document.getElementById("run");    
     run_el.addEventListener("click", ()=>{
         board.run = true;
@@ -514,3 +519,4 @@ export function clear_el(board){
         };
     });
 };
+
