@@ -1,5 +1,6 @@
+//imports
 import Node from './node.js';
-
+import PriorityQueue from "../models/priorityQueue.js";
 /**
  * @class Board
  * Class for creating a board
@@ -27,7 +28,7 @@ export default class Board{
         this.status = true;
         this.walls = [];
         this.weights = {};
-        this.checkpoints = {};
+        this.checkpoints = new PriorityQueue();
 
         // board activities
         this.pressedCell = {};

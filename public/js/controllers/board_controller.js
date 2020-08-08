@@ -6,6 +6,7 @@
 //imports 
 import Visualiser from '../controllers/visualiser_controller.js';
 import Algorithms from "./algorithm_controller.js";
+import PriorityQueue from "../models/priorityQueue.js";
 
 
 //visualiser object for animation
@@ -164,6 +165,7 @@ export function draw(board){
     let cell_pressed = ""; // address of the cell that has been clicked
     let weight_points = {}; // all the address of the node that has weights
     let checkpoint_points = {}; // all the address of the node that has checkpoints
+    let checkpoint_number = 1;
 
     let add_menu_el = document.getElementById("add"); // DOM for the add id, which is add menu
     adding_el(add_menu_el); // when user choose to add item in the board    
@@ -267,14 +269,14 @@ export function draw(board){
             //adding checkpoints in the board
             if(mode["is_adding_checkpoint"]['0']){
                 if (!obstacles[event.target.className]) {   
-                    cell_pressed.status = "checkpoint";                
+                    cell_pressed.status = "checkpoint";
                     checkpoint_points[event.target.id] = cell_pressed;
-                    board.checkpoints[event.target.id] = cell_pressed;
+                    board.checkpoints.enqueue(event.target.id,checkpoint_number);
                     cell_pressed.pressedMode = "moveable";
                     cell.setAttribute("class", "checkpoint")
                     console.log("checkpoint point has been added: ", event.target.id);
                     
-                    console.log("checkpoints number:",Object.keys(checkpoint_points).length)
+                    console.log("checkpoints number:",checkpoint_number)
                     if (Object.keys(checkpoint_points).length > 4) {
                         checkpoint_el.setAttribute("class", "dropdown-item disabled")
                     }
@@ -285,6 +287,7 @@ export function draw(board){
                 else {
                     console.log("checkpoint point cannnot be added")
                 }
+                checkpoint_number++; //counter for added checkpoints
             }
 
             mode["is_drawing"]["0"] = true;

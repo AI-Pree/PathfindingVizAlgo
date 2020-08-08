@@ -87,4 +87,12 @@ export default class PriortyQueue{
         }
         return "queue is empty"
     }
+
+    /**
+     * @function clearAll
+     * clear all the element in the item
+     */
+    clearAll(){
+        this.item = [] // making array empty
+    }
 }
