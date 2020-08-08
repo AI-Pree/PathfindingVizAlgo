@@ -342,7 +342,7 @@ export function run(board){
         }
         board.algo = name;       
     });
-    
+
     const run_el = document.getElementById("run");    
     run_el.addEventListener("click", ()=>{
         board.run = true;
@@ -512,25 +512,5 @@ export function clear_el(board){
                 value(board);
             });
         };
-    });
-};
-
-/**
- * @function pathfinding
- * select the pathfinding algorithm
- */
-export const algorithmRun = (board) => {
-    //alogrithm handler
-    let algo = new Algorithms(board); 
-    let algorithm_el = document.getElementById('algorithm_list');
-    algorithm_el.addEventListener("click",(event)=>{     
-        let name = event.target.text; //getting the choosen algorithm by the user
-        let algoName = document.getElementById("algorithm_name"); // dom of the button name that needs to be changed with the picked algorithm
-        // doesnt change if its the same algorithm and the name is empty
-        if(algoName.innerHTML != name && name){
-            algoName.innerHTML = name; // replacing the name with the new picked name
-            algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
-        }
-        board.algo = name;       
     });
 };
