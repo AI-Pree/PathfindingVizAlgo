@@ -32,10 +32,9 @@ var initialise = function(){
     console.log(new_board.getNeighbours("0:2"));    
     console.log("run: ",new_board.run);
     console.log("stop: ",new_board.stop); 
-    run(new_board);
+    algorithm(new_board);    
     stop(new_board);
     clear_el(new_board);
-    new_board.algo = algorithm();
     draw(new_board);
 }
 console.log("rows: " + height, "columns: " + width);

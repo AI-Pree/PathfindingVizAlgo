@@ -11,12 +11,10 @@ import Algorithms from "./algorithm_controller.js";
 //visualiser object for animation
 let visualiser = new Visualiser();
 
-//alogrithm handler
-let algo = new Algorithms(board); 
 
 // algorithm dict
 const algoToVisualise = {
-    "Dijikstra's Algorithm":function(){               
+    "Dijkstra's algorithm":function(algo){                    
         // implementing algorithms when run
         algo.dijikstra();
         algo.pathVis();
@@ -268,7 +266,7 @@ export function draw(board){
  * @function run
  * runs the algorithm selected by the user
  */
-export function run(board){
+export function run(board,algo){
     const run_el = document.getElementById("run");    
     run_el.addEventListener("click", ()=>{
         board.run = true;
@@ -277,7 +275,8 @@ export function run(board){
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
         console.log("running....");  
-        algoToVisualise[board.algo];
+        console.log(board.algo)
+        algoToVisualise[board.algo](algo);
 
         // pass new upgraded grid after the run button is clicked
         console.log("Added info grid: ", board.grid);
@@ -295,8 +294,8 @@ export const stop = (board) => {
         board.stop = true;
         board.run = false;
         board.status = true;
-        console.log("run: ",board.run);
-        console.log("stop: ",board.stop);
+        console.log("run: ", board.run);
+        console.log("stop: ", board.stop);
     });
 };
 
@@ -444,7 +443,9 @@ export function clear_el(board){
  * @function pathfinding
  * select the pathfinding algorithm
  */
-export const algorithm = () => {
+export const algorithm = (board) => {
+    //alogrithm handler
+    let algo = new Algorithms(board); 
     let algorithm_el = document.getElementById('algorithm_list');
     algorithm_el.addEventListener("click",(event)=>{     
         let name = event.target.text; //getting the choosen algorithm by the user
@@ -454,7 +455,8 @@ export const algorithm = () => {
             algoName.innerHTML = name; // replacing the name with the new picked name
             console.log(name);
             algoName.removeAttribute("disabled"); //enabling user to click the button when algorithm is picked
-        }        
+        }
+        board.algo = name;
+        run(board, algo); // run the specific choose algorithm 
     });
-    return name;
 };
