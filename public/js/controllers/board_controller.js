@@ -23,11 +23,7 @@ const algoToVisualise = {
     "Dijkstra's algorithm":function(algo){                    
         // implementing algorithms when run
         algo.dijikstra();
-        algo.pathVis();
-
-        //visualising path and algorithm
-        visualiser.visualise["dijikstra"].apply(algo);
-        visualiser.visualise["pathVis"].apply(algo);
+        //algo.pathVis();
     },
     /**
      * @function Dijkstra's algorithm
@@ -230,10 +226,11 @@ export function draw(board){
             if(mode["is_adding_destination"]['0']){                              
                 // cannot add more than one destination point
                 if (board.destination === "" && !obstacles[event.target.className]) {
-                    let destinaiton_point = event.target.id;
+                    let destination_point = event.target.id;
                     cell_pressed.pressedMode = "moveable";
                     cell_pressed.status = "destination";
-                    board.destination = destinaiton_point;
+                    board.checkpoints.enqueue(destination_point, 6); // goal cell is going to be visied after all the chekpoints are reached
+                    board.destination = destination_point;
                     cell.setAttribute("class", "destination")
                     console.log("destination point has been added: ", event.target.id);
                     //user is unable to click the button after the destination point has been added
@@ -351,6 +348,7 @@ export function run(board){
         board.algo = name;       
     });
     
+    //clicked on the run
     const run_el = document.getElementById("run");    
     run_el.addEventListener("click", ()=>{
         board.run = true;
@@ -358,8 +356,9 @@ export function run(board){
         board.status = false;
         console.log("run: ",board.run);
         console.log("stop: ",board.stop);
-        console.log("running....");  
+        console.log("running....");        
         console.log(board.algo)
+        console.log(board.checkpoints)
         algoToVisualise[board.algo](algo);
 
         // pass new upgraded grid after the run button is clicked

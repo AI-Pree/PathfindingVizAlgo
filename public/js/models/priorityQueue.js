@@ -89,6 +89,24 @@ export default class PriortyQueue{
     }
 
     /**
+     * @funcion show_all
+     */
+    show_all(){
+        return this.item;
+    }
+
+    /**@function copy
+     * copying the priority queue object for deep copy
+     */
+    copy(){
+        let copy = new PriortyQueue();
+        this.item.map(e=>{
+            copy.enqueue(e.element,e.priority);
+        })
+        return copy;
+    }
+
+    /**
      * @function clearAll
      * clear all the element in the item
      */
