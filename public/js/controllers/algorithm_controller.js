@@ -39,7 +39,7 @@ export default function Algorithms(board) {
         2:{
             "start_color":"#da1e37",
             "mid_color":"#b21e35",
-            "last_color":"##641220",
+            "last_color":"#641220",
         },
         3:{
             "start_color":"#80ed99",

@@ -69,25 +69,31 @@ Visualiser.prototype.visualise = {
       let cellHTML = document.getElementById(next_node);     
       let opacity_all = 0;
       let all_color = "";
+      let first_color = this.colorPicked["start_color"]
+      let mid_color = this.colorPicked["mid_color"]
+      let last_color = this.colorPicked["last_color"]
       if (cellHTML.className == "weight") {
         opacity_all= 0.6;
         all_color = "orange";
       }
       else {
-        all_color = this.colorPicked["last_color"];
+        all_color = last_color;
         opacity_all = 1;
       }
+      console.log(first_color)
+      console.log(mid_color)
+      console.log(last_color)
       document.getElementById(next_node).animate([
         //keyframes
         {
           opacity: 0.1,
-          backgroundColor: this.colorPicked["first_color"],
+          backgroundColor: first_color,
           padding:"0px",
           overflow: "hidden",
         },
         {
           opacity: 0.4,
-          backgroundColor: this.colorPicked["mid_color"],
+          backgroundColor: mid_color,
           padding:"0px",
           overflow: "hidden",
 
