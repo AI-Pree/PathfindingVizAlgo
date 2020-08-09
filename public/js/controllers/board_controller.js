@@ -6,7 +6,6 @@
 //imports 
 import Visualiser from '../controllers/visualiser_controller.js';
 import Algorithms from "./algorithm_controller.js";
-import PriorityQueue from "../models/priorityQueue.js";
 
 
 //visualiser object for animation

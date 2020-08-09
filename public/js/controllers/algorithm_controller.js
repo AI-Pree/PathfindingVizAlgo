@@ -16,6 +16,7 @@ let visualiser = new Visualiser();
  * Uses flood fill algorithm
  */
 export default function Algorithms(board) {
+    this.allPath = new PriorityQueue();
     this.board = board;
     this.previous_node = {};
     this.previous_node_stack = [];
@@ -24,6 +25,7 @@ export default function Algorithms(board) {
     this.path = [];
     this.path_delay = 0;
     this.current_cost = {};
+    this.visitpoint_previous_node = {}
     this.destination_points = board.checkpoints.show_all();
     this.colors = {
         0:{
@@ -71,6 +73,7 @@ Algorithms.prototype.dijikstra = function () {
     let checkpoints_pos = this.board.checkpoints.copy();
     let start = this.board.start;    
     this.colorPicked = this.colors[0];
+    let path_counter = 6; // later use for revarsal of path for visualisation
     //Run the algorithm until it finds all the checkpoint and reaches the goal
     while (!checkpoints_pos.isEmpty()) {
         let frontier_queue = new PriorityQueue();  // using prirority queue
@@ -82,6 +85,7 @@ Algorithms.prototype.dijikstra = function () {
         this.current_cost = {};
         this.current_cost[start] = 0;
         this.goal = checkpoints_pos.dequeue();
+        let goal_path = {};
         // when frontier has covered all the cell in the this.board or early
         // exit implemented when the frontier finds the destination 
         // point on the this.board
@@ -107,16 +111,21 @@ Algorithms.prototype.dijikstra = function () {
             console.log("cost so far: ", this.current_cost);
             console.log("frontier has: ", frontier_queue);
         }        
+        this.visitpoint_previous_node[this.goal.element] = JSON.parse(JSON.stringify(this.previous_node))
+        this.delay = visualiser.visualise["dijikstra"](this.current_cost, this.colorPicked, this.delay); //for algorithm visualisation  
+        start = this.goal.element;  
+        //adding each destinations path to a priority queue
+        this.allPath.enqueue(start, path_counter)
+        this.colorPicked = this.colors[this.goal.priority]; // choose color scheme for the animation based on their checkpoint priority number          
         
-        this.delay = visualiser.visualise["dijikstra"](this.current_cost, this.colorPicked, this.delay);        
-        
-        start = this.goal.element;   
-        this.colorPicked = this.colors[this.goal.priority]; // choose color scheme for the animation based on their checkpoint priority number     
+        path_counter--;   // subtracting the counter each iteration
         if(start == this.board.destination){
             break;
         }
+        
     }
-    console.log("path is ", this.path)
+    console.log(this.visitpoint_previous_node)
+    console.log("all the paths are : ", this.allPath)
 }
 
 /**
@@ -124,25 +133,31 @@ Algorithms.prototype.dijikstra = function () {
  * add all the paths node address from start to point
  */
 Algorithms.prototype.pathVis = function () {
-    let checkpoints_path = this.board.checkpoints.copy();
-    while (!checkpoints_path.isEmpty()) {
+    
+    while (!this.allPath.isEmpty()) {
         // make the starting point to be the checkpoint
         let next_node_path = "";
-        let current_path_node = checkpoints_path.dequeue().element; // started with destination
-        if (!checkpoints_path.isEmpty()) {
-            next_node_path = checkpoints_path.peek().element;
-        }
-        else {
+        let destination_point = this.allPath.peek().element;
+        let current_path_node = this.allPath.dequeue().element; // started with destination
+        
+        
+        if(this.allPath.isEmpty()){
             next_node_path = this.board.start;
         }
+        else{
+            
+            next_node_path = this.allPath.peek().element;
+        }
         //for showing path 
-        while (current_path_node != next_node_path) {
-            this.path.push(current_path_node);
-            current_path_node = this.previous_node[current_path_node]
+        while (destination_point != next_node_path) {
+            this.path.push(destination_point);
+            destination_point = this.visitpoint_previous_node[current_path_node][destination_point]
         }
         this.path.push(next_node_path);
         this.path.reverse();
-        console.log("path has:", this.path);        
+        console.log("path has:", this.path);  
+        visualiser.visualise["pathVis"].apply(this) 
+        this.path = []  
     }
-    visualiser.visualise["pathVis"].apply(this)
+    
 }
