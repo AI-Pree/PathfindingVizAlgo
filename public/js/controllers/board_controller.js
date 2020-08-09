@@ -23,7 +23,7 @@ const algoToVisualise = {
     "Dijkstra's algorithm":function(algo){                    
         // implementing algorithms when run
         algo.dijikstra();
-        //algo.pathVis();
+        algo.pathVis();
     },
     /**
      * @function Dijkstra's algorithm

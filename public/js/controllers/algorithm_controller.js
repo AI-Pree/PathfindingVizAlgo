@@ -142,7 +142,7 @@ Algorithms.prototype.pathVis = function () {
         }
         this.path.push(next_node_path);
         this.path.reverse();
-        console.log("path has:", this.path);
-        visualiser.visualise["pathVis"].apply(this)
+        console.log("path has:", this.path);        
     }
+    visualiser.visualise["pathVis"].apply(this)
 }
