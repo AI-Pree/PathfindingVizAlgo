@@ -74,20 +74,20 @@ Visualiser.prototype.visualise = {
         all_color = "orange";
       }
       else {
-        all_color = "#F20089";
+        all_color = this.colorPicked["last_color"];
         opacity_all = 1;
       }
       document.getElementById(next_node).animate([
         //keyframes
         {
           opacity: 0.1,
-          backgroundColor: "#2D00F7",
+          backgroundColor: this.colorPicked["first_color"],
           padding:"0px",
           overflow: "hidden",
         },
         {
-          opacity: 0.2,
-          backgroundColor: "#A100F2",
+          opacity: 0.4,
+          backgroundColor: this.colorPicked["mid_color"],
           padding:"0px",
           overflow: "hidden",
 
