@@ -70,7 +70,7 @@ Algorithms.prototype.dijikstra = function () {
     console.log(this.board);
     let checkpoints_pos = this.board.checkpoints.copy();
     let start = this.board.start;    
-    this.colorPicked = this.colors[0]
+    this.colorPicked = this.colors[0];
     //Run the algorithm until it finds all the checkpoint and reaches the goal
     while (!checkpoints_pos.isEmpty()) {
         let frontier_queue = new PriorityQueue();  // using prirority queue
@@ -78,6 +78,7 @@ Algorithms.prototype.dijikstra = function () {
 
         frontier_queue.enqueue(start, 0) // adding a start point for the frontier to run
         let current_node = ""; // frontier of the node that needs to be determined
+        //this.current_cost = {};
         this.current_cost = {};
         this.current_cost[start] = 0;
         this.goal = checkpoints_pos.dequeue();
@@ -105,10 +106,12 @@ Algorithms.prototype.dijikstra = function () {
             });
             console.log("cost so far: ", this.current_cost);
             console.log("frontier has: ", frontier_queue);
-        }
-        visualiser.visualise["dijikstra"].apply(this);
-        start = this.goal.element;
-        this.colorPicked = this.colors[this.goal.priority]; // choose color scheme for the animation based on their checkpoint priority number
+        }        
+        
+        this.delay = visualiser.visualise["dijikstra"](this.current_cost, this.colorPicked, this.delay);        
+        
+        start = this.goal.element;   
+        this.colorPicked = this.colors[this.goal.priority]; // choose color scheme for the animation based on their checkpoint priority number     
         if(start == this.board.destination){
             break;
         }
