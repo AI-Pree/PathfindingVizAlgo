@@ -73,7 +73,7 @@ Algorithms.prototype.dijikstra = function () {
     let checkpoints_pos = this.board.checkpoints.copy();
     let start = this.board.start;    
     this.colorPicked = this.colors[0];
-    let path_counter = 6; // later use for revarsal of path for visualisation
+    let path_counter = 1; // later use for revarsal of path for visualisation
     //Run the algorithm until it finds all the checkpoint and reaches the goal
     while (!checkpoints_pos.isEmpty()) {
         let frontier_queue = new PriorityQueue();  // using prirority queue
@@ -85,7 +85,7 @@ Algorithms.prototype.dijikstra = function () {
         this.current_cost = {};
         this.current_cost[start] = 0;
         this.goal = checkpoints_pos.dequeue();
-        let goal_path = {};
+        //let goal_path = {};
         // when frontier has covered all the cell in the this.board or early
         // exit implemented when the frontier finds the destination 
         // point on the this.board
@@ -118,7 +118,7 @@ Algorithms.prototype.dijikstra = function () {
         this.allPath.enqueue(start, path_counter)
         this.colorPicked = this.colors[this.goal.priority]; // choose color scheme for the animation based on their checkpoint priority number          
         
-        path_counter--;   // subtracting the counter each iteration
+        path_counter++;   // subtracting the counter each iteration
         if(start == this.board.destination){
             break;
         }
@@ -133,31 +133,32 @@ Algorithms.prototype.dijikstra = function () {
  * add all the paths node address from start to point
  */
 Algorithms.prototype.pathVis = function () {
-    
+    let destination_point = "";
+    let previous_destination = "";
+    let checkpoint_path = "";
     while (!this.allPath.isEmpty()) {
         // make the starting point to be the checkpoint
-        let next_node_path = "";
-        let destination_point = this.allPath.peek().element;
-        let current_path_node = this.allPath.dequeue().element; // started with destination
-        
-        
-        if(this.allPath.isEmpty()){
-            next_node_path = this.board.start;
+        let current_path_node = this.allPath.dequeue(); // started with destination
+        checkpoint_path = this.visitpoint_previous_node[current_path_node.element][current_path_node.element]
+        if (current_path_node.priority == 1){
+           destination_point = this.board.start;
         }
         else{
-            
-            next_node_path = this.allPath.peek().element;
+            destination_point = previous_destination
         }
+        this.path.push(current_path_node.element);
         //for showing path 
-        while (destination_point != next_node_path) {
-            this.path.push(destination_point);
-            destination_point = this.visitpoint_previous_node[current_path_node][destination_point]
+        while (checkpoint_path != destination_point) {
+            this.path.push(checkpoint_path);
+            checkpoint_path = this.visitpoint_previous_node[current_path_node.element][checkpoint_path]
         }
-        this.path.push(next_node_path);
+
+        this.path.push(destination_point);
         this.path.reverse();
         console.log("path has:", this.path);  
-        visualiser.visualise["pathVis"].apply(this) 
-        this.path = []  
+        visualiser.visualise["pathVis"].apply(this)          
+        previous_destination = current_path_node.element;
+        this.path = [] 
     }
     
 }
