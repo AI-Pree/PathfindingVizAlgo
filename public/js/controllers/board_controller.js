@@ -6,7 +6,7 @@
 //imports 
 import Visualiser from '../controllers/visualiser_controller.js';
 import Algorithms from "./algorithm_controller.js";
-import Algorithms from "./
+
 
 //visualiser object for animation
 let visualiser = new Visualiser();
