@@ -11,6 +11,7 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+/* listening to the server port 500- */
 app.listen(port, () =>{
 	console.log("server is starting at http://localhost:" + port);
 });
